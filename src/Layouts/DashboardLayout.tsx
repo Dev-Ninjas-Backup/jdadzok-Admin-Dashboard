@@ -16,7 +16,7 @@ export default function DashboardLayout() {
 
 			{/* Main Content - Takes remaining space */}
 			<div className="flex-1 flex flex-col min-w-0">
-				<main className="flex-1 px-8 pt-15 md:px-12 md:pt-8 overflow-y-auto">
+				<main className="flex-1 px-8 pt-15 pb-8 md:px-12 md:pt-8 overflow-y-auto">
 					<Outlet />
 				</main>
 			</div>
