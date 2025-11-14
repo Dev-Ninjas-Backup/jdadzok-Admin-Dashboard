@@ -1,17 +1,84 @@
-export default function IncomeAnalytics() {
-	return (
-		<div className="mb-10 flex items-center justify-between overflow-auto ">
-			<div className="space-y-1">
-				<h1 className="text-2xl  text-[#101828]">Income Analytics</h1>
-				<p className="text-[#4A5565] text-md">
-					Welcome back! Here's what's happening on your platform.
-				</p>
-			</div>
-			<button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-4 py-2">
-				Export Users
-			</button>
+import { DashboardCharts } from "@/components/IncomeAnalytics/IncomeChart";
+import { TopSellers } from "@/components/IncomeAnalytics/TopSellers";
+import { Users, Building2, Calendar, ShoppingBag } from "lucide-react"
+// import { Button } from "@/components/ui/button"
+// import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
-			{/* Stats Cards */}
-		</div>
+
+export default function IncomeAnalytics() {
+	const stats = [
+		{
+			label: "Total Users",
+			value: "5,342",
+			change: "+12% from last month",
+			icon: Users,
+			iconColor: "text-blue-500",
+			bgColor: "bg-blue-50",
+		},
+		{
+			label: "Verified Communities",
+			value: "287",
+			change: "+8 new this week",
+			icon: Building2,
+			iconColor: "text-green-500",
+			bgColor: "bg-green-50",
+		},
+		{
+			label: "Active Events",
+			value: "145",
+			change: "23 happening today",
+			icon: Calendar,
+			iconColor: "text-purple-500",
+			bgColor: "bg-purple-50",
+		},
+		{
+			label: "Marketplace Revenue",
+			value: "$53,240",
+			change: "+18% from last month",
+			icon: ShoppingBag,
+			iconColor: "text-orange-500",
+			bgColor: "bg-orange-50",
+		},
+	]
+	return (
+		<main className="min-h-screen">
+			{/* Header Section */}
+			<div className="flex items-start justify-between py-8 border-b border-gray-200 bg-white">
+				<div>
+					<h1 className="text-3xl font-semibold text-gray-900">Income & Analytics</h1>
+					<p className="text-gray-600 mt-2">Monitor revenue, commissions, and financial performance.</p>
+				</div>
+				<button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-lg">Download Financial Report</button>
+			</div>
+
+			<div className="py-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+					{stats.map((stat, index) => {
+						const Icon = stat.icon
+						return (
+							<div
+								key={index}
+								className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
+							>
+								<div className="flex justify-between items-start">
+									<div>
+										<p className="text-gray-600 text-sm font-medium">{stat.label}</p>
+										<p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
+										<p className="text-green-600 text-sm font-medium mt-2">{stat.change}</p>
+									</div>
+									<div className={`${stat.bgColor} p-3 rounded-lg`}>
+										<Icon className={`${stat.iconColor} w-6 h-6`} />
+									</div>
+								</div>
+							</div>
+						)
+					})}
+				</div>
+			</div>
+			<div className="space-y-8">
+				<DashboardCharts />
+				<TopSellers />
+			</div>
+		</main>
 	);
 }
