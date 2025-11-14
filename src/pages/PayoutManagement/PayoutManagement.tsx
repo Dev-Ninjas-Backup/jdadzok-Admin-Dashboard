@@ -101,7 +101,7 @@ export default function PayoutManagement() {
 					</p>
 				</div>
 			</div>
-			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+			<div className="grid min-[480px]:grid-cols-2 grid-cols-1 xl:grid-cols-4 gap-4">
 				{stats.map((stat, index) => (
 					<CardWithoutIcon
 						key={index}
@@ -123,24 +123,7 @@ export default function PayoutManagement() {
 					onChange={handleSearchChange}
 				/>
 			</div>
-			{/* <div className=" flex sm:flex-row flex-col rounded-2xl items-center gap-2 bg-[#ECECF0] sm:rounded-full p-1 w-fit">
-				{filters.map((filter) => (
-					<button
-						key={filter.id}
-						onClick={() => setActiveFilter(filter.id)}
-						className={`cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all ${
-							activeFilter === filter.id
-								? "bg-white text-[#0A0A0A] shadow-sm"
-								: "text-gray-600 hover:text-gray-900"
-						}`}
-					>
-						{filter.label}
-						{filter.count !== null && (
-							<span className="ml-2 text-xs">{filter.count}</span>
-						)}
-					</button>
-				))}
-			</div> */}
+
 			<div className="flex flex-wrap sm:flex-nowrap rounded-2xl gap-2 bg-[#ECECF0] sm:rounded-full p-1 w-full sm:w-fit">
 				{filters.map((filter) => (
 					<button
