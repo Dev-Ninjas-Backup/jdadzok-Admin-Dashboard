@@ -112,7 +112,7 @@ export default function Notifications() {
 					/>
 				))}
 			</div>
-			<div className="w-full  mx-auto bg-white rounded-xl border border-gray-200 p-6">
+			<div className="w-full  mx-auto bg-white rounded-xl border border-[#0000001a] p-6">
 				<h2 className="text-base font-medium text-[#101828] mb-8">
 					Compose Notification
 				</h2>
