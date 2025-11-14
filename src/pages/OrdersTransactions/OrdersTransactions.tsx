@@ -131,7 +131,7 @@ export default function OrdersTransactions() {
 					Export Report
 				</button>
 			</div>
-			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+			<div className="grid min-[480px]:grid-cols-2 grid-cols-1 xl:grid-cols-4 gap-4">
 				{stats.map((stat, index) => (
 					<CardWithoutIcon
 						key={index}
