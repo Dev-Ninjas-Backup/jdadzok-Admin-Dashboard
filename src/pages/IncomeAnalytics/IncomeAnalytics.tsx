@@ -1,9 +1,8 @@
 import { DashboardCharts } from "@/components/IncomeAnalytics/IncomeChart";
 import { TopSellers } from "@/components/IncomeAnalytics/TopSellers";
-import { Users, Building2, Calendar, ShoppingBag } from "lucide-react"
+import { Users, Building2, Calendar, ShoppingBag } from "lucide-react";
 // import { Button } from "@/components/ui/button"
 // import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
-
 
 export default function IncomeAnalytics() {
 	const stats = [
@@ -39,22 +38,29 @@ export default function IncomeAnalytics() {
 			iconColor: "text-orange-500",
 			bgColor: "bg-orange-50",
 		},
-	]
+	];
 	return (
-		<main className="min-h-screen">
+		<main>
 			{/* Header Section */}
-			<div className="flex items-start justify-between py-8 border-b border-gray-200 bg-white">
-				<div>
-					<h1 className="text-3xl font-semibold text-gray-900">Income & Analytics</h1>
-					<p className="text-gray-600 mt-2">Monitor revenue, commissions, and financial performance.</p>
+
+			<div className=" flex items-center justify-between overflow-auto ">
+				<div className="space-y-1">
+					<h1 className="text-xl sm:text-2xl  text-[#101828]">
+						Income & Analytics
+					</h1>
+					<p className="text-[#4A5565] text-sm sm:text-base">
+						Monitor revenue, commissions, and financial performance.
+					</p>
 				</div>
-				<button className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-lg">Download Financial Report</button>
+				<button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
+					Download Financial Report
+				</button>
 			</div>
 
 			<div className="py-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 					{stats.map((stat, index) => {
-						const Icon = stat.icon
+						const Icon = stat.icon;
 						return (
 							<div
 								key={index}
@@ -62,16 +68,22 @@ export default function IncomeAnalytics() {
 							>
 								<div className="flex justify-between items-start">
 									<div>
-										<p className="text-gray-600 text-sm font-medium">{stat.label}</p>
-										<p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-										<p className="text-green-600 text-sm font-medium mt-2">{stat.change}</p>
+										<p className="text-gray-600 text-sm font-medium">
+											{stat.label}
+										</p>
+										<p className="text-2xl font-bold text-gray-900 mt-2">
+											{stat.value}
+										</p>
+										<p className="text-green-600 text-sm font-medium mt-2">
+											{stat.change}
+										</p>
 									</div>
 									<div className={`${stat.bgColor} p-3 rounded-lg`}>
 										<Icon className={`${stat.iconColor} w-6 h-6`} />
 									</div>
 								</div>
 							</div>
-						)
+						);
 					})}
 				</div>
 			</div>
