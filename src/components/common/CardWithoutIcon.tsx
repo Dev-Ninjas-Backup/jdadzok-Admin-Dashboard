@@ -4,8 +4,10 @@ interface CardWithoutIconProps {
 	subtitle?: string;
 	subtitleColor?: string;
 	leftIconColor?: string;
+	rightIconColor?: string;
 	subtitleIcon?: React.ReactNode;
 	leftIcon?: React.ReactNode;
+	rightIcon?: React.ReactNode;
 	gap?: number;
 	gapX?: number;
 }
@@ -19,12 +21,20 @@ const CardWithoutIcon: React.FC<CardWithoutIconProps> = ({
 	gap = 0,
 	leftIcon,
 	leftIconColor = "#4A5565",
+	rightIcon,
+	rightIconColor = "#4A5565",
 	gapX = 0,
 }) => {
 	return (
 		<div
 			className="border border-[#0000001a] items-center flex flex-row py-4 ps-4 rounded-xl"
-			style={{ gap: `${gapX}px` }}
+			style={{
+				gap: `${gapX}px`,
+				...(rightIcon && {
+					justifyContent: "space-between",
+					paddingRight: "16px",
+				}),
+			}}
 		>
 			{leftIcon && (
 				<span className="items-center" style={{ color: leftIconColor }}>
@@ -45,6 +55,11 @@ const CardWithoutIcon: React.FC<CardWithoutIconProps> = ({
 					)}
 				</div>
 			</div>
+			{rightIcon && (
+				<span className="items-center" style={{ color: rightIconColor }}>
+					{rightIcon}
+				</span>
+			)}
 		</div>
 	);
 };
