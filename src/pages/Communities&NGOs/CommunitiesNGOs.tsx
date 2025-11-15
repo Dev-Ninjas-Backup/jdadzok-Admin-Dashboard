@@ -1,6 +1,8 @@
 import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import SearchBar from "@/components/common/SearchBar";
 import CommunityTable from "@/components/Community/CommunityTable";
+import { useGetAllCommunitiesOverviewQuery } from "@/redux/features/communities/communitiesApi";
+import { useCommunities } from "@/redux/features/communities/hooks/communities";
 import { CheckCircle, Clock } from "lucide-react";
 import { useState } from "react";
 
@@ -14,36 +16,6 @@ interface Community {
 	events: number;
 	status: "verified" | "pending";
 }
-const stats = [
-	{
-		title: "Total Communities",
-		value: "5",
-		subtitle: undefined,
-		subtitleColor: "#4A5565",
-		subtitleIcon: null,
-	},
-	{
-		title: "Verified",
-		value: "3",
-		subtitle: "Active" as string | undefined,
-		subtitleColor: "#00A63E",
-		subtitleIcon: <CheckCircle size={16} />,
-	},
-	{
-		title: "Pending Verification",
-		value: "2",
-		subtitle: "Awaiting review" as string | undefined,
-		subtitleColor: "#F54900",
-		subtitleIcon: <Clock size={16} />,
-	},
-	{
-		title: "Total Members",
-		value: "6,419",
-		subtitle: undefined,
-		subtitleColor: "#4A5565",
-		subtitleIcon: null,
-	},
-];
 
 const community: Community[] = [
 	{
@@ -99,11 +71,48 @@ const community: Community[] = [
 ];
 
 export default function CommunitiesNGOs() {
-	const [searchValue, setSearchValue] = useState("");
+	const [search, setSearch] = useState("");
+	const { data } = useGetAllCommunitiesOverviewQuery(undefined);
+
+	const { community, page, setPage, totalPages } = useCommunities({
+		search,
+	});
+
+	const stats = [
+		{
+			title: "Total Communities",
+			value: `${data?.totalCommunityAndNgo}`,
+			subtitle: undefined,
+			subtitleColor: "#4A5565",
+			subtitleIcon: null,
+		},
+		{
+			title: "Verified",
+			value: `${data?.Verified}`,
+			subtitle: "Active" as string | undefined,
+			subtitleColor: "#00A63E",
+			subtitleIcon: <CheckCircle size={16} />,
+		},
+		{
+			title: "Pending Verification",
+			value: `${data?.PendingVerification}`,
+			subtitle: "Awaiting review" as string | undefined,
+			subtitleColor: "#F54900",
+			subtitleIcon: <Clock size={16} />,
+		},
+		{
+			title: "Total Members",
+			value: `${data?.totalFollowers}`,
+			subtitle: undefined,
+			subtitleColor: "#4A5565",
+			subtitleIcon: null,
+		},
+	];
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value);
+		setSearch(e.target.value);
 	};
+
 	return (
 		<div className="space-y-6">
 			<div className="mb-10 flex items-center justify-between overflow-auto ">
@@ -135,7 +144,7 @@ export default function CommunitiesNGOs() {
 			<div className="border border-[#0000001a] rounded-xl overflow-hidden bg-white p-4">
 				<SearchBar
 					placeholder="Search communities by name or leader...."
-					value={searchValue}
+					value={search}
 					onChange={handleSearchChange}
 				/>
 			</div>

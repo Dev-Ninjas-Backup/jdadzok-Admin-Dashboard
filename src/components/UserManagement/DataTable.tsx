@@ -20,8 +20,6 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 			.toUpperCase();
 	};
 
-	console.log("user", data);
-
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">

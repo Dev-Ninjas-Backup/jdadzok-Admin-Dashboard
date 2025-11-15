@@ -3,7 +3,7 @@ import baseApi from "../../api/baseApi";
 export const userApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		//get All Users
-		getAllUsers: builder.query({
+		getAllUserOverview: builder.query({
 			query: () => ({
 				url: "/admin/dashboard/user-overview",
 				method: "GET",
@@ -40,7 +40,7 @@ export const userApi = baseApi.injectEndpoints({
 });
 
 export const {
-	useGetAllUsersQuery,
+	useGetAllUserOverviewQuery,
 	useDeleteUserMutation,
 	useGetAllUserQuery,
 } = userApi;

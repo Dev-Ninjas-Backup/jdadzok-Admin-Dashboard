@@ -3,21 +3,23 @@ import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import DataTable from "@/components/UserManagement/DataTable";
 import FilterBar from "@/components/UserManagement/FilterBar";
 import { useUser } from "@/redux/features/user/hooks/useUser";
-import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
+import { useGetAllUserOverviewQuery } from "@/redux/features/user/userApi";
+
 import { useState } from "react";
 
 export default function UserManagement() {
-	const { data } = useGetAllUsersQuery(undefined);
+	const { data } = useGetAllUserOverviewQuery(undefined);
 	const [search, setSearch] = useState("");
 	const [status, setStatus] = useState("All Status");
 	const [role, setRole] = useState("All Roles");
 
 	// Call the custom hook with filters
-	const { user, page, setPage, totalPages } = useUser({
-		search,
-		status: status === "All Status" ? undefined : status,
-		role: role === "All Roles" ? undefined : role,
-	});
+	const filters = {
+		search: search || undefined, // include only if not empty
+		...(status !== "All Status" && { status }),
+		...(role !== "All Roles" && { role }),
+	};
+	const { user, page, setPage, totalPages } = useUser(filters);
 	const handlePrev = () => setPage(Math.max(1, page - 1));
 	const handleNext = () => setPage(Math.min(totalPages, page + 1));
 
