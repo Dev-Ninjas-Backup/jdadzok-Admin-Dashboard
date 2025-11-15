@@ -61,11 +61,11 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 										<Package size={20} className="text-gray-400" />
 									</div>
 									<div className="flex flex-col gap-1">
-										<div className="text-sm font-medium text-[#101828]">
+										<div className="text-sm font-medium text-[#101828] whitespace-nowrap">
 											{product.name}
 										</div>
 										{product.featured && (
-											<div className="flex items-center gap-1 border border-[#0000001a] w-fit px-2 py-1 rounded-lg">
+											<div className="flex items-center gap-1 border border-[#0000001a] w-fit px-2 py-1 rounded-lg whitespace-nowrap">
 												<Star
 													size={12}
 													className="text-[#F0B100] fill-[#F0B100]"
@@ -78,13 +78,15 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 							</td>
 
 							{/* Seller */}
-							<td className="px-4 py-4">
-								<span className="text-sm text-[#364153]">{product.seller}</span>
+							<td className="px-4 py-4 ">
+								<span className="text-sm whitespace-nowrap text-[#364153]">
+									{product.seller}
+								</span>
 							</td>
 
 							{/* Category */}
 							<td className="px-4 py-4">
-								<span className="text-sm text-[#0A0A0A]  border border-[#0000001a] px-2 py-1 rounded-lg">
+								<span className="text-sm text-[#0A0A0A]  border border-[#0000001a] px-2 py-1 rounded-lg whitespace-nowrap">
 									{product.category}
 								</span>
 							</td>
@@ -97,9 +99,9 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 							</td>
 
 							{/* Stock */}
-							<td className="px-4 py-4">
+							<td className="px-4 py-4 ">
 								<span
-									className={`text-sm font-medium ${
+									className={`text-sm font-medium  ${
 										product.stock === 0 ? "text-[#CA3500]" : "text-[#364153]"
 									}`}
 								>
@@ -125,7 +127,7 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 							{/* Status */}
 							<td className="px-4 py-4">
 								<span
-									className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${
+									className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap ${
 										product.status === "active"
 											? "bg-[#DCFCE7] text-[#008236] "
 											: product.status === "out-of-stock"

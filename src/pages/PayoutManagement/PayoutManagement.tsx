@@ -131,7 +131,7 @@ export default function PayoutManagement() {
 						onClick={() => setActiveFilter(filter.id)}
 						className={`
 				cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all
-				w-[48%] sm:w-auto       /* 👉 2 items per row below sm */
+				w-[48%] sm:w-auto 
         ${
 					activeFilter === filter.id
 						? "bg-white text-[#0A0A0A] shadow-sm"
