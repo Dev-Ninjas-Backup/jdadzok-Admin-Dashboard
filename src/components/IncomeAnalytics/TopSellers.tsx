@@ -10,46 +10,11 @@ interface Seller {
 }
 
 const sellers: Seller[] = [
-  {
-    rank: 1,
-    name: "Green Store",
-    orders: 156,
-    revenue: 8450,
-    commission: 84,
-    growth: 12,
-  },
-  {
-    rank: 2,
-    name: "EcoEssentials",
-    orders: 234,
-    revenue: 7320,
-    commission: 73,
-    growth: 12,
-  },
-  {
-    rank: 3,
-    name: "Sustainable Fashion",
-    orders: 189,
-    revenue: 6890,
-    commission: 68,
-    growth: 12,
-  },
-  {
-    rank: 4,
-    name: "Tech4Good",
-    orders: 98,
-    revenue: 5670,
-    commission: 56,
-    growth: 12,
-  },
-  {
-    rank: 5,
-    name: "Kitchen Eco",
-    orders: 145,
-    revenue: 4230,
-    commission: 42,
-    growth: 12,
-  },
+  { rank: 1, name: "Green Store", orders: 156, revenue: 8450, commission: 84, growth: 12 },
+  { rank: 2, name: "EcoEssentials", orders: 234, revenue: 7320, commission: 73, growth: 12 },
+  { rank: 3, name: "Sustainable Fashion", orders: 189, revenue: 6890, commission: 68, growth: 12 },
+  { rank: 4, name: "Tech4Good", orders: 98, revenue: 5670, commission: 56, growth: 12 },
+  { rank: 5, name: "Kitchen Eco", orders: 145, revenue: 4230, commission: 42, growth: 12 },
 ]
 
 export function TopSellers() {
@@ -66,11 +31,11 @@ export function TopSellers() {
         {sellers.map((seller) => (
           <div
             key={seller.rank}
-            className="flex items-center justify-between py-4 px-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors"
+            className="flex flex-col md:flex-row md:items-center justify-between py-4 px-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors"
           >
-            {/* Left: Rank and Store Info */}
+            {/* Left */}
             <div className="flex items-center gap-4 flex-1">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
                 <span className="text-blue-600 font-semibold text-sm">#{seller.rank}</span>
               </div>
               <div>
@@ -79,27 +44,28 @@ export function TopSellers() {
               </div>
             </div>
 
-            {/* Right: Revenue and Commission */}
-            <div className="flex items-center gap-12">
+            {/* Right */}
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-12 mt-4 md:mt-0 w-full md:w-auto">
+
               {/* Revenue */}
-              <div className="text-right">
+              <div className="text-left md:text-right w-1/3 md:w-auto">
                 <p className="text-xs text-gray-500 font-medium mb-1">Revenue</p>
-                <p className="text-sm font-medium text-gray-900">${(seller.revenue / 1000).toFixed(1)},</p>
+                <p className="text-sm font-medium text-gray-900">
+                  ${(seller.revenue / 1000).toFixed(1)},
+                </p>
                 <p className="text-sm text-gray-600">{seller.revenue % 1000}</p>
               </div>
 
               {/* Commission */}
-              <div className="text-right">
+              <div className="text-left md:text-right w-1/3 md:w-auto">
                 <p className="text-xs text-gray-500 font-medium mb-1">Commission</p>
                 <p className="text-sm font-medium text-green-600">${seller.commission}</p>
                 <p className="text-sm text-gray-600">{seller.commission}</p>
               </div>
 
               {/* Growth */}
-              <div className="text-right flex items-center gap-2 flex-shrink-0">
-                <div>
-                  <TrendingUp className="w-4 h-4 text-green-600" />
-                </div>
+              <div className="flex items-center gap-2 w-1/3 md:w-auto">
+                <TrendingUp className="w-4 h-4 text-green-600" />
                 <p className="text-sm font-medium text-green-600">{seller.growth}%</p>
               </div>
             </div>

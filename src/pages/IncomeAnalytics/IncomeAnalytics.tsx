@@ -1,9 +1,8 @@
 import DashboardHeader from "@/components/common/DashboardHeader";
-import { DashboardCharts } from "@/components/IncomeAnalytics/IncomeChart";
+import { IncomeCharts } from "@/components/IncomeAnalytics/IncomeChart";
 import { TopSellers } from "@/components/IncomeAnalytics/TopSellers";
 import { Users, Building2, Calendar, ShoppingBag } from "lucide-react";
-// import { Button } from "@/components/ui/button"
-// import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+
 
 export default function IncomeAnalytics() {
   const stats = [
@@ -84,7 +83,7 @@ export default function IncomeAnalytics() {
         </div>
       </div>
       <div className="space-y-8">
-        <DashboardCharts />
+        <IncomeCharts />
         <TopSellers />
       </div>
     </main>
