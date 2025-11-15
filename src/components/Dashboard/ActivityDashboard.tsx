@@ -1,7 +1,6 @@
 "use client";
 
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { AlertCircle } from "lucide-react";
 import { PendingApprovals } from "./PendingApprovals";
 
 const activityData = [
@@ -10,32 +9,6 @@ const activityData = [
   { name: "Donations", value: 20, color: "#f59e0b" },
 ];
 
-const pendingApprovals = [
-  {
-    id: 1,
-    category: "Community Verification",
-    title: "Green Earth Foundation",
-    time: "2 hours ago",
-  },
-  {
-    id: 2,
-    category: "Event Approval",
-    title: "Beach Cleanup Drive",
-    time: "5 hours ago",
-  },
-  {
-    id: 3,
-    category: "Product Listing",
-    title: "Eco-Friendly Water Bottle",
-    time: "1 day ago",
-  },
-  {
-    id: 4,
-    category: "Payout Request",
-    title: "Ocean Warriors NGO",
-    time: "1 day ago",
-  },
-];
 
 export function ActivityDashboard() {
   return (

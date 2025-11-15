@@ -1,11 +1,8 @@
-"use client";
-
 import DashboardHeader from "@/components/common/DashboardHeader";
+import StatCard from "@/components/common/DashboardStatCard";
 import { ActivityDashboard } from "@/components/Dashboard/ActivityDashboard";
 import RecentReports from "@/components/Dashboard/RecentReports";
-// import { ActivityDashboard } from "@/"
 
-// import { RecentReports } from "@/components/RecentReports"
 import {
   Users,
   Building2,
@@ -13,7 +10,7 @@ import {
   ShoppingBag,
   TrendingUp,
 } from "lucide-react";
-// import { Button } from "@/components/ui/button"
+
 import {
   LineChart,
   Line,
@@ -96,32 +93,9 @@ export default function DashboardOverview() {
       {/* Stats Grid */}
       <div className="py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={index}
-                className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="text-gray-600 text-sm font-medium">
-                      {stat.label}
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900 mt-2">
-                      {stat.value}
-                    </p>
-                    <p className="text-green-600 text-sm font-medium mt-2">
-                      {stat.change}
-                    </p>
-                  </div>
-                  <div className={`${stat.bgColor} p-3 rounded-lg`}>
-                    <Icon className={`${stat.iconColor} w-6 h-6`} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {stats.map((stat, index) => (
+            <StatCard key={index} {...stat} />
+          ))}
         </div>
       </div>
 
