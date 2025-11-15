@@ -56,7 +56,7 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 									<div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700">
 										{row.initials}
 									</div>
-									<div className="text-sm font-normal text-[#101828]">
+									<div className="text-sm font-normal text-[#101828] whitespace-nowrap">
 										{row.name}
 									</div>
 								</div>
@@ -64,14 +64,14 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 
 							{/* Type */}
 							<td className="px-6 py-4">
-								<span className="text-sm text-[#0A0A0A] font-normal border border-[#0000001a] rounded-xl overflow-hidden px-2 py-1">
+								<span className="text-sm text-[#0A0A0A] font-normal border border-[#0000001a] rounded-xl overflow-hidden px-2 py-1 whitespace-nowrap">
 									{row.type}
 								</span>
 							</td>
 
 							{/* Leader */}
 							<td className="px-6 py-4">
-								<span className="text-sm text-[#364153] font-normal">
+								<span className="text-sm text-[#364153] font-normal whitespace-nowrap">
 									{row.leader}
 								</span>
 							</td>

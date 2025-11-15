@@ -170,16 +170,19 @@ export default function Marketplace() {
 					onChange={handleSearchChange}
 				/>
 			</div>
-			<div className=" flex items-center gap-2 bg-[#ECECF0] rounded-full p-1 w-fit">
+			<div className="flex flex-wrap sm:flex-nowrap rounded-2xl gap-2 bg-[#ECECF0] sm:rounded-full p-1 w-full sm:w-fit">
 				{filters.map((filter) => (
 					<button
 						key={filter.id}
 						onClick={() => setActiveFilter(filter.id)}
-						className={`cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all ${
-							activeFilter === filter.id
-								? "bg-white text-[#0A0A0A] shadow-sm"
-								: "text-gray-600 hover:text-gray-900"
-						}`}
+						className={`
+				cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all
+				w-[48%] sm:w-auto 
+        ${
+					activeFilter === filter.id
+						? "bg-white text-[#0A0A0A] shadow-sm"
+						: "text-gray-600 hover:text-gray-900"
+				}`}
 					>
 						{filter.label}
 						{filter.count !== null && (

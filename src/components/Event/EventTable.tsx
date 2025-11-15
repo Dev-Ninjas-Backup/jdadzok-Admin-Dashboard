@@ -47,7 +47,7 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 							className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
 						>
 							{/* Event */}
-							<td className="px-6 py-4">
+							<td className="px-6 py-4 whitespace-nowrap">
 								<div className="flex flex-col gap-1">
 									<div className="text-sm font-medium text-[#101828]">
 										{row.name}
@@ -59,22 +59,22 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 							</td>
 
 							{/* Community */}
-							<td className="px-6 py-4">
+							<td className="px-6 py-4 whitespace-nowrap">
 								<span className="text-sm text-[#364153]">{row.community}</span>
 							</td>
 
 							{/* Date */}
 							<td className="px-6 py-4">
-								<div className="flex items-start gap-2 text-sm text-[#364153]">
-									<Calendar size={16} className="text-[#99A1AF]" />
+								<div className="flex items-start gap-2 text-sm text-[#364153] whitespace-nowrap">
+									<Calendar size={16} className="text-[#99A1AF] " />
 									{row.date}
 								</div>
 							</td>
 
 							{/* Location */}
 							<td className="px-6 py-4">
-								<div className="flex items-start gap-2 text-sm text-[#364153]">
-									<MapPin size={16} className="text-[#99A1AF]" />
+								<div className="flex items-start gap-2 text-sm text-[#364153] whitespace-nowrap">
+									<MapPin size={16} className="text-[#99A1AF] " />
 									{row.location}
 								</div>
 							</td>

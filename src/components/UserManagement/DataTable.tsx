@@ -109,7 +109,9 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 
 							{/* Joined */}
 							<td className="px-6 py-4">
-								<span className="text-sm text-[#6A7282]">{row.joined}</span>
+								<span className="text-sm text-[#6A7282] whitespace-nowrap">
+									{row.joined}
+								</span>
 							</td>
 
 							{/* Actions */}
