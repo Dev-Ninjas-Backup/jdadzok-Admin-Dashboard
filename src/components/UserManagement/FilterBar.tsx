@@ -14,8 +14,8 @@ interface FilterBarProps {
 
 const FilterBar: React.FC<FilterBarProps> = ({
 	searchPlaceholder = "Search by name or email...",
-	statusOptions = ["All Status", "Active", "Inactive", "Pending"],
-	roleOptions = ["All Roles", "Admin", "User", "Manager"],
+	statusOptions = ["All Status", "Active", "Suspended"],
+	roleOptions = ["All Roles", "Admin", "User", "Moderator"],
 	onSearchChange,
 	onStatusChange,
 	onRoleChange,
@@ -31,13 +31,15 @@ const FilterBar: React.FC<FilterBarProps> = ({
 	};
 
 	const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedStatus(e.target.value);
-		onStatusChange?.(e.target.value);
+		const value = e.target.value; // "" if All Status
+		setSelectedStatus(value);
+		onStatusChange?.(value);
 	};
 
 	const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedRole(e.target.value);
-		onRoleChange?.(e.target.value);
+		const value = e.target.value; // "" if All Roles
+		setSelectedRole(value);
+		onRoleChange?.(value);
 	};
 
 	return (
@@ -61,7 +63,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
 						className="appearance-none w-full pl-4 pr-10 py-2.5 bg-[#F3F3F5] border-0 rounded-lg text-sm text-gray-700 cursor-pointer focus:outline-none sm:min-w-[140px]"
 					>
 						{statusOptions.map((option) => (
-							<option key={option} value={option}>
+							<option
+								key={option}
+								value={option === "All Status" ? "" : option.toLowerCase()}
+							>
 								{option}
 							</option>
 						))}
@@ -80,7 +85,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
 						className="appearance-none w-full pl-4 pr-10 py-2.5 bg-[#F3F3F5] border-0 rounded-lg text-sm text-gray-700 cursor-pointer focus:outline-none sm:min-w-[140px]"
 					>
 						{roleOptions.map((option) => (
-							<option key={option} value={option}>
+							<option
+								key={option}
+								value={option === "All Roles" ? "" : option.toUpperCase()}
+							>
 								{option}
 							</option>
 						))}
