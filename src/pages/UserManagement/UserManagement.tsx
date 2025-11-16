@@ -89,26 +89,27 @@ export default function UserManagement() {
 			<div className="bg-white border border-[#0000001a] rounded-xl shadow-sm overflow-hidden">
 				<DataTable data={user} />
 			</div>
-
-			<div className="flex justify-end gap-2 mt-4">
-				<button
-					onClick={handlePrev}
-					disabled={page === 1}
-					className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-				>
-					Prev
-				</button>
-				<span className="px-4 py-2 bg-gray-100 rounded">
-					Page {page} of {totalPages}
-				</span>
-				<button
-					onClick={handleNext}
-					disabled={page === totalPages}
-					className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-				>
-					Next
-				</button>
-			</div>
+			{totalPages > 0 && (
+				<div className="flex justify-end gap-2 mt-4">
+					<button
+						onClick={handlePrev}
+						disabled={page === 1}
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					>
+						Prev
+					</button>
+					<span className="px-4 py-2 bg-gray-100 rounded">
+						Page {page} of {totalPages}
+					</span>
+					<button
+						onClick={handleNext}
+						disabled={page === totalPages}
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					>
+						Next
+					</button>
+				</div>
+			)}
 		</div>
 	);
 }
