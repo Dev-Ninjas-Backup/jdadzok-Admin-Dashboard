@@ -94,7 +94,7 @@ const Login: React.FC = () => {
 										name="email"
 										value={formData.email}
 										onChange={handleChange}
-										className="w-full pl-11 pr-4 py-3 border border-slate-300 rounded-lg   outline-none transition-all"
+										className="w-full pl-11 pr-4 py-3 border text-slate-700 border-slate-300 rounded-lg   outline-none transition-all"
 										placeholder="admin@example.com"
 										required
 									/>
@@ -117,7 +117,7 @@ const Login: React.FC = () => {
 										name="password"
 										value={formData.password}
 										onChange={handleChange}
-										className="w-full pl-11 pr-12 py-3 border border-slate-300 rounded-lg  outline-none transition-all"
+										className="w-full pl-11 pr-12 py-3 text-slate-700 border border-slate-300 rounded-lg  outline-none transition-all"
 										placeholder="Enter your password"
 										required
 									/>
@@ -141,7 +141,7 @@ const Login: React.FC = () => {
 								disabled={isLoading}
 								className="w-full bg-[#1447E6] cursor-pointer text-white py-3 rounded-lg font-medium  hover:bg-[#153fc0] focus:outline-none focus:ring-2  transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30"
 							>
-								"Sign In"
+								Sign In
 							</button>
 
 							{/* Remember Me & Forgot Password */}
