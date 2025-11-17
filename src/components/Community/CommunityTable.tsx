@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Eye, CheckCircle, Clock } from "lucide-react";
+import Review from "./Review";
+import CustomPopup from "../common/CustomPopup";
 
 interface Community {
 	initials: string;
-	name: string;
+	title: string;
 	type: string;
 	leader: string;
-	members: number;
+	followersCount: number;
 	level: number;
 	events: number;
+	id: string;
 	status: "verified" | "pending";
 }
 
 const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
+	const getInitials = (name?: string) => {
+		if (!name) return "?";
+		return name
+			.split(" ")
+			.map((word) => word[0])
+			.join("")
+			.toUpperCase();
+	};
+
+	const [simplePopup, setSimplePopup] = useState(false);
+
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">
@@ -54,10 +68,10 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-3">
 									<div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700">
-										{row.initials}
+										{getInitials(row?.title)}
 									</div>
 									<div className="text-sm font-normal text-[#101828] whitespace-nowrap">
-										{row.name}
+										{row.title}
 									</div>
 								</div>
 							</td>
@@ -79,7 +93,7 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							{/* Members */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row.members.toLocaleString()}
+									{row.followersCount}
 								</span>
 							</td>
 
@@ -128,12 +142,23 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 										View
 									</button>
 									{row.status === "pending" && (
-										<button className="cursor-pointer px-3 py-1.5 bg-[#030213] text-white text-sm rounded-xl hover:bg-gray-800 transition-colors">
+										<button
+											onClick={() => setSimplePopup(true)}
+											className="cursor-pointer px-3 py-1.5 bg-[#030213] text-white text-sm rounded-xl hover:bg-gray-800 transition-colors"
+										>
 											Review
 										</button>
 									)}
 								</div>
 							</td>
+							<CustomPopup
+								isOpen={simplePopup}
+								onClose={() => setSimplePopup(false)}
+								title="Community & NGO Management"
+								size="md"
+							>
+								<Review id={row?.id} setSimplePopup={setSimplePopup} />
+							</CustomPopup>
 						</tr>
 					))}
 				</tbody>

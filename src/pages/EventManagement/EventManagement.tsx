@@ -1,103 +1,55 @@
 import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import SearchBar from "@/components/common/SearchBar";
 import EventTable from "@/components/Event/EventTable";
+import { useGetAllEventOverviewQuery } from "@/redux/features/event/eventApi";
+import { useEvent } from "@/redux/features/event/hooks/event";
 import { useState } from "react";
 
-interface Event {
-	name: string;
-	category: string;
-	community: string;
-	date: string;
-	location: string;
-	participants: string;
-	status: "upcoming" | "ongoing" | "completed" | "pending";
-}
-
-const stats = [
-	{
-		title: "Total Events",
-		value: "5",
-		subtitle: undefined,
-		subtitleColor: "#4A5565",
-		subtitleIcon: null,
-	},
-	{
-		title: "Upcoming",
-		value: "2",
-		subtitle: "Ready to start" as string | undefined,
-		subtitleColor: "#155DFC", // Blue color
-		subtitleIcon: null,
-	},
-	{
-		title: "Ongoing",
-		value: "1",
-		subtitle: "In progress" as string | undefined,
-		subtitleColor: "#00A63E", // Green color
-		subtitleIcon: null,
-	},
-	{
-		title: "Pending Approval",
-		value: "1",
-		subtitle: "Awaiting review" as string | undefined,
-		subtitleColor: "#F54900", // Orange color
-		subtitleIcon: null,
-	},
-];
-
-const sampleEvents: Event[] = [
-	{
-		name: "Beach Cleanup Drive",
-		category: "Cleanup",
-		community: "Ocean Warriors",
-		date: "2024-06-20",
-		location: "Santa Monica Beach",
-		participants: "145/200",
-		status: "upcoming",
-	},
-	{
-		name: "Tree Planting Marathon",
-		category: "Planting",
-		community: "Green Earth Foundation",
-		date: "2024-06-18",
-		location: "Central Park",
-		participants: "89/100",
-		status: "ongoing",
-	},
-	{
-		name: "Wildlife Education Workshop",
-		category: "Workshop",
-		community: "Wildlife Rescue Team",
-		date: "2024-06-15",
-		location: "Community Center",
-		participants: "67/75",
-		status: "completed",
-	},
-	{
-		name: "River Cleanup Initiative",
-		category: "Cleanup",
-		community: "Clean City Initiative",
-		date: "2024-06-25",
-		location: "Hudson River",
-		participants: "0/150",
-		status: "pending",
-	},
-	{
-		name: "Community Garden Setup",
-		category: "Gardening",
-		community: "Tree Planters United",
-		date: "2024-06-22",
-		location: "Downtown Square",
-		participants: "32/50",
-		status: "upcoming",
-	},
-];
-
 export default function EventManagement() {
-	const [searchValue, setSearchValue] = useState("");
+	const [search, setSearch] = useState("");
+	const { data } = useGetAllEventOverviewQuery(undefined);
+
+	const { event, page, setPage, totalPages } = useEvent({
+		search,
+	});
+	const handlePrev = () => setPage(Math.max(1, page - 1));
+	const handleNext = () => setPage(Math.min(totalPages, page + 1));
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value);
+		setSearch(e.target.value);
 	};
+	console.log("event", event);
+	const stats = [
+		{
+			title: "Total Events",
+			value: `${data?.totalProject}`,
+			subtitle: undefined,
+			subtitleColor: "#4A5565",
+			subtitleIcon: null,
+		},
+		{
+			title: "Upcoming",
+			value: `${data?.upcoming}`,
+			subtitle: "Ready to start" as string | undefined,
+			subtitleColor: "#155DFC", // Blue color
+			subtitleIcon: null,
+		},
+		{
+			title: "Ongoing",
+			value: `${data?.ongoing}`,
+			subtitle: "In progress" as string | undefined,
+			subtitleColor: "#00A63E", // Green color
+			subtitleIcon: null,
+		},
+		{
+			title: "Pending Approval",
+			value: `${data?.pendingApproval}`,
+			subtitle: "Awaiting review" as string | undefined,
+			subtitleColor: "#F54900", // Orange color
+			subtitleIcon: null,
+		},
+	];
+
 	return (
 		<div className="space-y-6">
 			<div className="mb-10 flex items-center justify-between overflow-auto ">
@@ -129,14 +81,35 @@ export default function EventManagement() {
 			<div className="border border-[#0000001a] rounded-xl overflow-hidden bg-white p-4">
 				<SearchBar
 					placeholder="Search events by title or community..."
-					value={searchValue}
+					value={search}
 					onChange={handleSearchChange}
 				/>
 			</div>
 
 			<div className="bg-white border border-[#0000001a] rounded-xl shadow-sm overflow-hidden">
-				<EventTable data={sampleEvents} />
+				<EventTable data={event} />
 			</div>
+			{totalPages > 0 && (
+				<div className="flex justify-end gap-2 mt-4">
+					<button
+						onClick={handlePrev}
+						disabled={page === 1}
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					>
+						Prev
+					</button>
+					<span className="px-4 py-2 bg-gray-100 rounded">
+						Page {page} of {totalPages}
+					</span>
+					<button
+						onClick={handleNext}
+						disabled={page === totalPages}
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					>
+						Next
+					</button>
+				</div>
+			)}
 		</div>
 	);
 }

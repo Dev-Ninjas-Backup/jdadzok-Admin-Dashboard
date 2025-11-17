@@ -15,10 +15,9 @@ interface LoginFormData {
 const Login: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [login] = useLoginMutation();
+	const [login, { isLoading }] = useLoginMutation();
 
 	const [showPassword, setShowPassword] = useState<boolean>(false);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<LoginFormData>({
 		email: "",
 		password: "",
