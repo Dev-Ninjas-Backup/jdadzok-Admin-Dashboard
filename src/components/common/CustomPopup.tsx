@@ -55,7 +55,7 @@ const CustomPopup: React.FC<PopupProps> = ({
 		<div className="fixed inset-0 flex items-center justify-center p-4">
 			{/* Backdrop */}
 			<div
-				className="absolute inset-0 bg-gray-200/30 backdrop-blur-sm"
+				className="absolute inset-0 bg-gray-50/30 backdrop-blur-none"
 				onClick={closeOnOutsideClick ? onClose : undefined}
 			/>
 			{/* Modal */}

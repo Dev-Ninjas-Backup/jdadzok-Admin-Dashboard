@@ -97,9 +97,7 @@ export default function Sidebar() {
 						className="w-11 h-11 rounded-full object-cover"
 					/>
 					<div>
-						<h3 className="text-[#1F2024] text-xl font-semibold">
-							SpectraSynq
-						</h3>
+						<h3 className="text-[#1F2024] text-xl font-semibold">SynqUlan</h3>
 					</div>
 				</div>
 

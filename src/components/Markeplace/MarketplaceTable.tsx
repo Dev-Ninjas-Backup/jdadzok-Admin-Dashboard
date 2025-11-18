@@ -2,18 +2,19 @@ import React from "react";
 import { Eye, CheckCircle, X, Star, Package } from "lucide-react";
 
 interface Product {
-	name: string;
-	featured?: boolean;
+	title: string;
+	isFeatured?: boolean;
 	seller: string;
 	category: string;
 	price: string;
 	stock: number;
-	sales: number;
+	totalSalesAmount: number;
 	rating: number;
-	status: "active" | "out-of-stock" | "pending";
+	status: "CONTINUED" | "SOLDOUT" | "pending";
 }
 
 const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
+	console.log(data);
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">
@@ -62,9 +63,9 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 									</div>
 									<div className="flex flex-col gap-1">
 										<div className="text-sm font-medium text-[#101828] whitespace-nowrap">
-											{product.name}
+											{product.title}
 										</div>
-										{product.featured && (
+										{product.isFeatured && (
 											<div className="flex items-center gap-1 border border-[#0000001a] w-fit px-2 py-1 rounded-lg whitespace-nowrap">
 												<Star
 													size={12}
@@ -111,7 +112,9 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 
 							{/* Sales */}
 							<td className="px-4 py-4">
-								<span className="text-sm text-[#364153]">{product.sales}</span>
+								<span className="text-sm text-[#364153]">
+									{product.totalSalesAmount}
+								</span>
 							</td>
 
 							{/* Rating */}
@@ -119,7 +122,7 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 								<div className="flex items-center gap-1">
 									<Star size={14} className="text-[#F0B100] fill-[#F0B100]" />
 									<span className="text-sm font-medium text-[#364153]">
-										{product.rating}
+										{product.rating <= 0 && 0}
 									</span>
 								</div>
 							</td>
@@ -128,15 +131,15 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
 							<td className="px-4 py-4">
 								<span
 									className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap ${
-										product.status === "active"
+										product.status === "CONTINUED"
 											? "bg-[#DCFCE7] text-[#008236] "
-											: product.status === "out-of-stock"
+											: product.status === "SOLDOUT"
 											? "bg-[#FFEDD4] text-[#CA3500] "
 											: "bg-[#ECEEF2] text-[#030213] "
 									}`}
 								>
-									{product.status === "active" && "Active"}
-									{product.status === "out-of-stock" && "Out of Stock"}
+									{product.status === "CONTINUED" && "Active"}
+									{product.status === "SOLDOUT" && "Out of Stock"}
 									{product.status === "pending" && "Pending"}
 								</span>
 							</td>

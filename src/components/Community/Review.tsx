@@ -5,7 +5,7 @@ import { useState } from "react";
 interface ReviewProps {
 	setSimplePopup: (value: boolean) => void;
 	roleOptions?: string[];
-	id: string; // you MUST pass ID from parent
+	id?: string; // you MUST pass ID from parent
 }
 
 const Review = ({
@@ -16,7 +16,7 @@ const Review = ({
 	const [status, setStatus] = useState(roleOptions[0]);
 	const [remarks, setRemarks] = useState("");
 	const [reviewCommunities] = useReviewCommunitiesMutation();
-
+	console.log("id", id);
 	const handleSubmit = async () => {
 		try {
 			await reviewCommunities({
@@ -41,7 +41,7 @@ const Review = ({
 				<select
 					value={status}
 					onChange={(e) => setStatus(e.target.value)}
-					className="appearance-none w-full pl-4 pr-10 py-2.5 bg-[#F3F3F5] border-0 rounded-lg text-sm text-black cursor-pointer"
+					className="appearance-none w-full pl-4 pr-10 py-2.5 bg-[#F3F3F5] outline-none border-0 rounded-lg text-sm text-black cursor-pointer"
 				>
 					{roleOptions.map((option) => (
 						<option key={option} value={option}>
@@ -62,7 +62,7 @@ const Review = ({
 				value={remarks}
 				onChange={(e) => setRemarks(e.target.value)}
 				placeholder="Description"
-				className="w-full px-4 py-2.5 bg-[#F3F3F5] border-0 rounded-lg text-sm text-black"
+				className="w-full px-4 py-2.5 bg-[#F3F3F5] border-0 rounded-lg text-sm text-black outline-none"
 			/>
 
 			<div className="flex justify-end mt-4">
