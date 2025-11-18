@@ -16,11 +16,15 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import user from "../../assets/images/user1.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/slices/authSlice";
 
 export default function Sidebar() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
+	const currentUser = useSelector((state: any) => state.auth?.user);
+	const dispatch = useDispatch();
 
 	const menuItems = [
 		{ icon: LayoutGrid, label: "Dashboard", href: "/dashboard" },
@@ -54,7 +58,11 @@ export default function Sidebar() {
 		navigate(href);
 		setIsOpen(false); // Close sidebar after navigation on mobile
 	};
-
+	const handleLogout = () => {
+		dispatch(logout());
+		localStorage.removeItem("token");
+		navigate("/login");
+	};
 	return (
 		<>
 			{/* Mobile Menu Button */}
@@ -118,18 +126,26 @@ export default function Sidebar() {
 				</nav>
 
 				{/* Logout */}
-				<div className="flex items-center gap-3 px-4 pt-4 border-t border-[#E5E7EB]">
+				<div className="flex items-center gap-3 px-1 pt-4 border-t border-[#E5E7EB]">
 					<img
 						src={user}
 						alt="Concert stage"
 						className="w-10 h-10 rounded-full object-cover"
 					/>
 					<div>
-						<h3 className="text-[#101828] text-sm font-normal">Admin User</h3>
+						<h3 className="text-[#101828] text-sm font-normal">
+							{currentUser?.role}
+						</h3>
 						<p className="text-[#6A7282] text-xs font-normal">
-							admin@gmail.com
+							{currentUser?.email}
 						</p>
 					</div>
+					<button
+						onClick={handleLogout}
+						className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded"
+					>
+						Logout
+					</button>
 				</div>
 			</aside>
 		</>

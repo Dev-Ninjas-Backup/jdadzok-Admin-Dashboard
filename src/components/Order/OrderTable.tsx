@@ -54,35 +54,37 @@ const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
 						>
 							{/* Product */}
 							<td className="px-4 py-4">
-								<div className="text-sm font-medium text-[#101828]">
+								<div className="text-sm font-medium text-[#101828] whitespace-nowrap">
 									{product.orderId}
 								</div>
 							</td>
 
 							{/* Seller */}
 							<td className="px-4 py-4">
-								<span className="text-sm text-[#364153]">
+								<span className="text-sm text-[#364153] whitespace-nowrap">
 									{product.customer}
 								</span>
 							</td>
 
 							{/* Category */}
 							<td className="px-4 py-4">
-								<span className="text-sm text-[#0A0A0A] ">
+								<span className="text-sm text-[#0A0A0A] whitespace-nowrap">
 									{product.product}
 								</span>
 							</td>
 
 							{/* Price */}
 							<td className="px-4 py-4">
-								<span className="text-sm font-medium text-[#101828]">
+								<span className="text-sm font-medium text-[#101828] whitespace-nowrap">
 									{product.seller}
 								</span>
 							</td>
 
 							{/* Stock */}
 							<td className="px-4 py-4">
-								<span className={`text-sm font-medium`}>{product.amount}</span>
+								<span className={`text-sm font-medium whitespace-nowrap`}>
+									{product.amount}
+								</span>
 							</td>
 
 							{/* Sales */}
@@ -94,7 +96,7 @@ const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
 
 							{/* Rating */}
 							<td className="px-4 py-4">
-								<span className="text-sm font-medium text-[#364153]">
+								<span className="text-sm font-medium text-[#364153] whitespace-nowrap">
 									{product.date}
 								</span>
 							</td>
@@ -102,7 +104,7 @@ const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
 							{/* Status */}
 							<td className="px-4 py-4">
 								<span
-									className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${
+									className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap ${
 										product.status === "completed"
 											? "bg-[#DCFCE7] text-[#008236]"
 											: product.status === "processing"
@@ -125,7 +127,7 @@ const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
 							{/* Actions */}
 							<td className="px-4 py-4">
 								<div className="flex items-center gap-2">
-									<button className="text-[#0A0A0A] cursor-pointer hover:bg-gray-100 border border-[#0000001a] px-2 py-1.5 rounded-lg transition-colors">
+									<button className="whitespace-nowrap text-[#0A0A0A] cursor-pointer hover:bg-gray-100 border border-[#0000001a] px-2 py-1.5 rounded-lg transition-colors">
 										View Details
 									</button>
 								</div>

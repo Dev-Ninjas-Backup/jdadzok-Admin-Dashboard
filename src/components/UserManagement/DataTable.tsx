@@ -7,11 +7,12 @@ interface User {
 	status: string;
 	level: string;
 	points: number;
-	joined: string;
+	joinedAt: string;
 }
 
 const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
-	const getInitials = (name: string) => {
+	const getInitials = (name?: string) => {
+		if (!name) return "?"; // fallback for missing names
 		return name
 			.split(" ")
 			.map((word) => word[0])
@@ -57,14 +58,14 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-3">
 									<div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-[#0A0A0A]">
-										{getInitials(row.name)}
+										{getInitials(row?.name)}
 									</div>
 									<div>
 										<div className="text-sm font-normal text-[#101828]">
-											{row.name}
+											{row?.name}
 										</div>
 										<div className="text-sm text-[#6A7282] font-normal">
-											{row.email}
+											{row?.email}
 										</div>
 									</div>
 								</div>
@@ -73,7 +74,7 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							{/* Role */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row.role}
+									{row?.role}
 								</span>
 							</td>
 
@@ -81,20 +82,20 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<span
 									className={`inline-flex px-2 py-1 rounded-full text-xs font-normal ${
-										row.status === "active"
+										row?.status === "active"
 											? "bg-[#030213] text-white"
 											: "bg-[#ECEEF2] text-[#030213]"
 									}`}
 								>
-									{row.status}
+									{row?.status}
 								</span>
 							</td>
 
 							{/* Level */}
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-2">
-									<div className="w-8 h-8 rounded-full bg-[#DBEAFE] flex items-center justify-center text-sm font-medium text-[#1447E6]">
-										{row.level}
+									<div className="p-1.5 rounded-full bg-[#DBEAFE] flex items-center justify-center text-sm font-medium text-[#1447E6]">
+										{row?.level}
 									</div>
 									<TrendingUp size={16} className="text-[#155DFC]" />
 								</div>
@@ -103,13 +104,15 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							{/* Points */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row.points.toLocaleString()}
+									{/* {row.points.toLocaleString()} */} 5
 								</span>
 							</td>
 
 							{/* Joined */}
 							<td className="px-6 py-4">
-								<span className="text-sm text-[#6A7282]">{row.joined}</span>
+								<span className="text-sm text-[#6A7282] whitespace-nowrap">
+									{row?.joinedAt?.slice(0, 10)}
+								</span>
 							</td>
 
 							{/* Actions */}
