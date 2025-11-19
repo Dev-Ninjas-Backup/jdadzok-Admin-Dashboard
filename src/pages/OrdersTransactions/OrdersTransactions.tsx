@@ -1,7 +1,10 @@
 import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import FilterBar from "@/components/Order/FilterBar";
 import OrderTable from "@/components/Order/OrderTable";
+import { useTransaction } from "@/redux/features/transaction/hooks/useTransaction";
+import { useGetAllTransactionOverviewQuery } from "@/redux/features/transaction/transactionApi";
 import { Box, Clock, DollarSign, DownloadIcon, TrendingUp } from "lucide-react";
+import { useState } from "react";
 
 interface Order {
 	orderId: string;
@@ -13,43 +16,6 @@ interface Order {
 	date: string;
 	status: "completed" | "processing" | "shipped" | "pending" | "refunded";
 }
-
-const stats = [
-	{
-		title: "Total Orders",
-		value: "5",
-		leftIconColor: "#155DFC",
-		leftIcon: <Box size={32} />,
-		subtitle: "+12% this month",
-		subtitleColor: "#00A63E",
-	},
-	{
-		title: "Total Revenue",
-		value: "$143.46",
-		subtitle: "+12% this month",
-		subtitleColor: "#00A63E",
-		leftIconColor: "#00A63E", // Blue color
-		leftIcon: <DollarSign size={32} />,
-	},
-	{
-		title: "Platform Commission",
-		value: "$14.35",
-
-		leftIconColor: "#9810FA", // Green color
-		leftIcon: <TrendingUp size={32} />,
-		subtitle: "10% avg rate",
-		subtitleColor: "#4A5565",
-	},
-	{
-		title: "Completed",
-		value: "2",
-
-		leftIconColor: "#F54900", // Orange color
-		leftIcon: <Clock size={32} />,
-		subtitle: "33% completion rate",
-		subtitleColor: "#4A5565",
-	},
-];
 
 const sampleOrders: Order[] = [
 	{
@@ -115,6 +81,58 @@ const sampleOrders: Order[] = [
 ];
 
 export default function OrdersTransactions() {
+	const [search, setSearch] = useState("");
+	const [status, setStatus] = useState("All Status");
+	const { data } = useGetAllTransactionOverviewQuery(undefined);
+
+	const filters = {
+		search: search || undefined, // include only if not empty
+		...(status !== "All Status" && { status }),
+	};
+	const { transaction, page, setPage, totalPages } = useTransaction(filters);
+	const handlePrev = () => setPage(Math.max(1, page - 1));
+	const handleNext = () => setPage(Math.min(totalPages, page + 1));
+
+	console.log(transaction);
+
+	const stats = [
+		{
+			title: "Total Orders",
+			value: `${data?.totalOrders}`,
+			leftIconColor: "#155DFC",
+			leftIcon: <Box size={32} />,
+			subtitle: `+${data?.orderIncreaseRate}% this month`,
+			subtitleColor: "#00A63E",
+		},
+		{
+			title: "Total Revenue",
+			value: `$${data?.totalRevenue}`,
+			subtitle: `+${data?.revenueIncreaseRate}% this month`,
+			subtitleColor: "#00A63E",
+			leftIconColor: "#00A63E", // Blue color
+			leftIcon: <DollarSign size={32} />,
+		},
+		{
+			title: "Platform Commission",
+			value: `${data?.commission}`,
+
+			leftIconColor: "#9810FA", // Green color
+			leftIcon: <TrendingUp size={32} />,
+			subtitle: `${data?.commissionIncreaseRate}% avg rate`,
+			subtitleColor: "#4A5565",
+		},
+
+		{
+			title: "Completed",
+			value: `${data?.completedOrders}`,
+
+			leftIconColor: "#F54900", // Orange color
+			leftIcon: <Clock size={32} />,
+			subtitle: `${data?.completionRate}% completion rate`,
+			subtitleColor: "#4A5565",
+		},
+	];
+
 	return (
 		<div className="space-y-6">
 			<div className="mb-10 flex items-center justify-between overflow-auto ">
@@ -149,8 +167,8 @@ export default function OrdersTransactions() {
 			<div className="border border-[#0000001a] rounded-xl overflow-hidden">
 				<FilterBar
 					searchPlaceholder="Search by order ID or customer..."
-					onSearchChange={(value: string) => console.log("Search:", value)}
-					onStatusChange={(value: string) => console.log("Status:", value)}
+					onSearchChange={(value) => setSearch(value)}
+					onStatusChange={(value) => setStatus(value)}
 					onMoreFiltersClick={() => console.log("More filters clicked")}
 				/>
 			</div>
@@ -158,6 +176,27 @@ export default function OrdersTransactions() {
 			<div className="bg-white border border-[#0000001a] rounded-xl shadow-sm overflow-hidden">
 				<OrderTable data={sampleOrders} />
 			</div>
+			{totalPages > 0 && (
+				<div className="flex justify-end gap-2 mt-4">
+					<button
+						onClick={handlePrev}
+						disabled={page === 1}
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					>
+						Prev
+					</button>
+					<span className="px-4 py-2 bg-gray-100 rounded">
+						Page {page} of {totalPages}
+					</span>
+					<button
+						onClick={handleNext}
+						disabled={page === totalPages}
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+					>
+						Next
+					</button>
+				</div>
+			)}
 		</div>
 	);
 }

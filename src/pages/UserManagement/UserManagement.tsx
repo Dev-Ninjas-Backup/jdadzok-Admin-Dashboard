@@ -32,13 +32,13 @@ export default function UserManagement() {
 		},
 		{
 			title: "Active Users",
-			value: `${data?.totalUsers}`,
-			subtitle: `${data?.totalUsersGrowth}% of total`,
+			value: `${data?.activeUsers}`,
+			subtitle: `${data?.activeUserPercent}% of total`,
 		},
 		{
 			title: "New This Week",
 			value: `${data?.newThisWeek}`,
-			subtitle: `${data?.totalUsersGrowth}% vs last week`,
+			subtitle: `${data?.newWeekPercent}% vs last week`,
 			subtitleColor: "#00A63E",
 		},
 		{

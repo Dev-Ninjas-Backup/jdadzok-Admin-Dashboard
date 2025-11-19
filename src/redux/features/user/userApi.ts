@@ -5,7 +5,7 @@ export const userApi = baseApi.injectEndpoints({
 		//get All Users
 		getAllUserOverview: builder.query({
 			query: () => ({
-				url: "/admin/dashboard/user-overview",
+				url: "/admin/userManagement/user-overview",
 				method: "GET",
 			}),
 			providesTags: ["Users"],
@@ -22,17 +22,24 @@ export const userApi = baseApi.injectEndpoints({
 				params.append("limit", limit.toString());
 
 				return {
-					url: `/admin/dashboard/users?${params.toString()}`,
+					url: `/admin/userManagement/users?${params.toString()}`,
 					method: "GET",
 				};
 			},
 			providesTags: ["Users"],
 		}),
 
-		deleteUser: builder.mutation({
+		suspendUser: builder.mutation({
 			query: (id) => ({
-				url: `/blog/${id}`,
-				method: "DELETE",
+				url: `/admin/userManagement/users/${id}/suspend`,
+				method: "PATCH",
+			}),
+			invalidatesTags: ["Users"],
+		}),
+		activeUser: builder.mutation({
+			query: (id) => ({
+				url: `/admin/userManagement/users/${id}/activate`,
+				method: "PATCH",
 			}),
 			invalidatesTags: ["Users"],
 		}),
@@ -41,6 +48,7 @@ export const userApi = baseApi.injectEndpoints({
 
 export const {
 	useGetAllUserOverviewQuery,
-	useDeleteUserMutation,
+	useSuspendUserMutation,
+	useActiveUserMutation,
 	useGetAllUserQuery,
 } = userApi;

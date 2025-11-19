@@ -1,23 +1,54 @@
-import { MoreVertical, TrendingUp } from "lucide-react";
+import React from "react";
+import {
+	useActiveUserMutation,
+	useSuspendUserMutation,
+} from "@/redux/features/user/userApi";
+import { TrendingUp } from "lucide-react";
+import toast from "react-hot-toast";
 
-interface User {
+export interface User {
+	id: string;
 	name: string;
 	email: string;
 	role: string;
-	status: string;
+	status: "active" | "suspended" | string;
 	level: string;
 	points: number;
 	joinedAt: string;
 }
 
-const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
+interface DataTableProps {
+	data: User[];
+}
+
+const DataTable: React.FC<DataTableProps> = ({ data }) => {
+	const [suspendUser] = useSuspendUserMutation();
+	const [activeUser] = useActiveUserMutation();
+
 	const getInitials = (name?: string) => {
-		if (!name) return "?"; // fallback for missing names
-		return name
+		if (!name) return "?";
+
+		const initials = name
 			.split(" ")
 			.map((word) => word[0])
 			.join("")
 			.toUpperCase();
+
+		return initials.slice(0, 3); // limit to 3 chars
+	};
+
+	const handleAction = async (id: string, status: string) => {
+		try {
+			if (status === "active") {
+				await suspendUser(id).unwrap();
+				toast.success("Suspend account successfully !");
+			} else {
+				await activeUser(id).unwrap();
+				toast.success("Active account successfully !");
+			}
+		} catch (error) {
+			console.error("Action failed:", error);
+		}
 	};
 
 	return (
@@ -49,23 +80,23 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((row, index) => (
+					{data.map((row) => (
 						<tr
-							key={index}
+							key={row.id}
 							className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
 						>
 							{/* User */}
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-3">
 									<div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-[#0A0A0A]">
-										{getInitials(row?.name)}
+										{getInitials(row.name)}
 									</div>
 									<div>
 										<div className="text-sm font-normal text-[#101828]">
-											{row?.name}
+											{row.name}
 										</div>
 										<div className="text-sm text-[#6A7282] font-normal">
-											{row?.email}
+											{row.email}
 										</div>
 									</div>
 								</div>
@@ -74,7 +105,7 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							{/* Role */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row?.role}
+									{row.role}
 								</span>
 							</td>
 
@@ -82,12 +113,12 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<span
 									className={`inline-flex px-2 py-1 rounded-full text-xs font-normal ${
-										row?.status === "active"
-											? "bg-[#030213] text-white"
-											: "bg-[#ECEEF2] text-[#030213]"
+										row.status === "active"
+											? "bg-[#DCFCE7] text-[#008236]"
+											: "bg-[#FFEDD4] text-[#CA3500]"
 									}`}
 								>
-									{row?.status}
+									{row.status}
 								</span>
 							</td>
 
@@ -95,7 +126,7 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-2">
 									<div className="p-1.5 rounded-full bg-[#DBEAFE] flex items-center justify-center text-sm font-medium text-[#1447E6]">
-										{row?.level}
+										{row.level}
 									</div>
 									<TrendingUp size={16} className="text-[#155DFC]" />
 								</div>
@@ -104,21 +135,28 @@ const DataTable: React.FC<{ data: User[] }> = ({ data }) => {
 							{/* Points */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{/* {row.points.toLocaleString()} */} 5
+									{row.points}
 								</span>
 							</td>
 
 							{/* Joined */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#6A7282] whitespace-nowrap">
-									{row?.joinedAt?.slice(0, 10)}
+									{row.joinedAt?.slice(0, 10)}
 								</span>
 							</td>
 
 							{/* Actions */}
 							<td className="px-6 py-4">
-								<button className="p-1 hover:bg-gray-200 rounded transition-colors">
-									<MoreVertical size={18} className="text-[#0A0A0A]" />
+								<button
+									onClick={() => handleAction(row.id, row.status)}
+									className={`text-sm items-center text-[#ffffff] hover:bg-white justify-center transition-colors border px-3 py-2 rounded-lg cursor-pointer ${
+										row.status === "suspended"
+											? "bg-[#008236] border-[#008236] hover:text-[#008236]"
+											: "bg-[#CA3500] border-[#CA3500] hover:text-[#CA3500]"
+									}`}
+								>
+									{row.status === "suspended" ? "Active" : "Suspend"}
 								</button>
 							</td>
 						</tr>

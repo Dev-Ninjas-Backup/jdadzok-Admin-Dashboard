@@ -15,10 +15,9 @@ interface LoginFormData {
 const Login: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [login] = useLoginMutation();
+	const [login, { isLoading }] = useLoginMutation();
 
 	const [showPassword, setShowPassword] = useState<boolean>(false);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [formData, setFormData] = useState<LoginFormData>({
 		email: "",
 		password: "",
@@ -94,7 +93,7 @@ const Login: React.FC = () => {
 										name="email"
 										value={formData.email}
 										onChange={handleChange}
-										className="w-full pl-11 pr-4 py-3 border border-slate-300 rounded-lg   outline-none transition-all"
+										className="w-full pl-11 pr-4 py-3 border text-slate-800 border-slate-300 rounded-lg   outline-none transition-all"
 										placeholder="admin@example.com"
 										required
 									/>
@@ -117,7 +116,7 @@ const Login: React.FC = () => {
 										name="password"
 										value={formData.password}
 										onChange={handleChange}
-										className="w-full pl-11 pr-12 py-3 border border-slate-300 rounded-lg  outline-none transition-all"
+										className="w-full pl-11 pr-12 py-3 text-slate-800 border border-slate-300 rounded-lg  outline-none transition-all"
 										placeholder="Enter your password"
 										required
 									/>
@@ -141,7 +140,7 @@ const Login: React.FC = () => {
 								disabled={isLoading}
 								className="w-full bg-[#1447E6] cursor-pointer text-white py-3 rounded-lg font-medium  hover:bg-[#153fc0] focus:outline-none focus:ring-2  transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30"
 							>
-								"Sign In"
+								Sign In
 							</button>
 
 							{/* Remember Me & Forgot Password */}
@@ -154,6 +153,10 @@ const Login: React.FC = () => {
 								</button>
 							</div>
 						</form>
+						<div className="pt-4">
+							<p className="text-gray-400"> Email: superadmin@gmail.com</p>
+							<p className="text-gray-400"> Password: superadmin</p>
+						</div>
 					</div>
 				</div>
 			</div>
