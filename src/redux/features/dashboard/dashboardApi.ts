@@ -10,6 +10,7 @@ export const dashboardApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["Dashboard"],
 		}),
+
 		getAllUserGrowth: builder.query({
 			query: () => ({
 				url: "/admin/dashboard/user-growth",
@@ -17,9 +18,18 @@ export const dashboardApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["Dashboard"],
 		}),
+
 		getAllRevenueTrends: builder.query({
 			query: () => ({
 				url: "/admin/dashboard/revenue-trends",
+				method: "GET",
+			}),
+			providesTags: ["Dashboard"],
+		}),
+
+		getAllActivity: builder.query({
+			query: () => ({
+				url: "/admin/dashboard/activity-division",
 				method: "GET",
 			}),
 			providesTags: ["Dashboard"],
@@ -31,4 +41,5 @@ export const {
 	useGetAllDashboardOverviewQuery,
 	useGetAllUserGrowthQuery,
 	useGetAllRevenueTrendsQuery,
+	useGetAllActivityQuery,
 } = dashboardApi;

@@ -3,6 +3,7 @@ import StatCard from "@/components/common/DashboardStatCard";
 import { ActivityDashboard } from "@/components/Dashboard/ActivityDashboard";
 import RecentReports from "@/components/Dashboard/RecentReports";
 import {
+	useGetAllActivityQuery,
 	useGetAllDashboardOverviewQuery,
 	useGetAllRevenueTrendsQuery,
 	useGetAllUserGrowthQuery,
@@ -32,6 +33,7 @@ export default function DashboardOverview() {
 	const { data } = useGetAllDashboardOverviewQuery(undefined);
 	const { data: growth } = useGetAllUserGrowthQuery(undefined);
 	const { data: revenue } = useGetAllRevenueTrendsQuery(undefined);
+	const { data: activity } = useGetAllActivityQuery(undefined);
 
 	const stats = [
 		{
@@ -177,7 +179,7 @@ export default function DashboardOverview() {
 			</div>
 
 			<div className="space-y-8 py-8">
-				<ActivityDashboard />
+				<ActivityDashboard data={activity?.activityDivision} />
 				<RecentReports />
 			</div>
 		</main>
