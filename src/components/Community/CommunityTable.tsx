@@ -12,6 +12,7 @@ interface Community {
 	level: number;
 	projectsCount: number;
 	id: string;
+	verificationId: string;
 	status: "verified" | "pending";
 }
 
@@ -48,9 +49,9 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Members
 						</th>
-						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
+						{/* <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Level
-						</th>
+						</th> */}
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Events
 						</th>
@@ -102,11 +103,11 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							</td>
 
 							{/* Level */}
-							<td className="px-6 py-4">
+							{/* <td className="px-6 py-4">
 								<div className="w-8 h-8 rounded-full bg-[#F3E8FF] flex items-center justify-center text-sm font-medium text-[#8200DB]">
 									{row.level}
 								</div>
-							</td>
+							</td> */}
 
 							{/* Events */}
 							<td className="px-6 py-4">
@@ -145,10 +146,10 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 										<Eye size={16} />
 										View
 									</button>
-									{row.status === "pending" && (
+									{row.verificationId && row?.type === "NGO" && (
 										<button
 											onClick={() => {
-												setSelectedId(row?.id);
+												setSelectedId(row?.verificationId);
 												setSimplePopup(true);
 											}}
 											className="cursor-pointer px-3 py-1.5 bg-[#030213] text-white text-sm rounded-xl hover:bg-gray-800 transition-colors"

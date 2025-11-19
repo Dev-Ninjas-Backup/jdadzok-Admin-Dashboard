@@ -10,7 +10,7 @@ interface ReviewProps {
 
 const Review = ({
 	setSimplePopup,
-	roleOptions = ["APPROVED", "REJECTED"],
+	roleOptions = ["APPROVED", "REJECTED", "PENDING"],
 	id,
 }: ReviewProps) => {
 	const [status, setStatus] = useState(roleOptions[0]);

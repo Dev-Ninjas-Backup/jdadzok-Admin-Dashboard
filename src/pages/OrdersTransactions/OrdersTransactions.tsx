@@ -101,13 +101,13 @@ export default function OrdersTransactions() {
 			value: `${data?.totalOrders}`,
 			leftIconColor: "#155DFC",
 			leftIcon: <Box size={32} />,
-			subtitle: "+12% this month",
+			subtitle: `+${data?.orderIncreaseRate}% this month`,
 			subtitleColor: "#00A63E",
 		},
 		{
 			title: "Total Revenue",
 			value: `$${data?.totalRevenue}`,
-			subtitle: "+12% this month",
+			subtitle: `+${data?.revenueIncreaseRate}% this month`,
 			subtitleColor: "#00A63E",
 			leftIconColor: "#00A63E", // Blue color
 			leftIcon: <DollarSign size={32} />,
@@ -118,16 +118,17 @@ export default function OrdersTransactions() {
 
 			leftIconColor: "#9810FA", // Green color
 			leftIcon: <TrendingUp size={32} />,
-			subtitle: "10% avg rate",
+			subtitle: `${data?.commissionIncreaseRate}% avg rate`,
 			subtitleColor: "#4A5565",
 		},
+
 		{
 			title: "Completed",
 			value: `${data?.completedOrders}`,
 
 			leftIconColor: "#F54900", // Orange color
 			leftIcon: <Clock size={32} />,
-			subtitle: `${data?.completionRate} completion rate`,
+			subtitle: `${data?.completionRate}% completion rate`,
 			subtitleColor: "#4A5565",
 		},
 	];
