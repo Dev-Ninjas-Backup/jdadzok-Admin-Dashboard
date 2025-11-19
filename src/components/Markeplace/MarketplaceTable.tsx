@@ -14,7 +14,6 @@ interface Product {
 }
 
 const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
-	console.log(data);
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">

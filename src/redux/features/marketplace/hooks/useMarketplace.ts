@@ -3,7 +3,6 @@ import { useGetAllMarketplaceQuery } from "../marketplaceApi";
 
 export const useMarketplace = (filters = {}) => {
 	const [page, setPage] = useState(1);
-	console.log("1", filters);
 	const queryParams = useMemo(
 		() => ({
 			page,

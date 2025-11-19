@@ -16,7 +16,7 @@ const Review = ({
 	const [status, setStatus] = useState(roleOptions[0]);
 	const [remarks, setRemarks] = useState("");
 	const [reviewCommunities] = useReviewCommunitiesMutation();
-	console.log("id", id);
+
 	const handleSubmit = async () => {
 		try {
 			await reviewCommunities({
