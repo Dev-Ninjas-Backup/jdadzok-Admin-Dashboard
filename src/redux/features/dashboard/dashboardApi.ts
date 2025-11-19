@@ -34,6 +34,13 @@ export const dashboardApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["Dashboard"],
 		}),
+		getAllPendingApplication: builder.query({
+			query: () => ({
+				url: "/admin/dashboard/pending-applications",
+				method: "GET",
+			}),
+			providesTags: ["Dashboard"],
+		}),
 	}),
 });
 
@@ -42,4 +49,5 @@ export const {
 	useGetAllUserGrowthQuery,
 	useGetAllRevenueTrendsQuery,
 	useGetAllActivityQuery,
+	useGetAllPendingApplicationQuery,
 } = dashboardApi;
