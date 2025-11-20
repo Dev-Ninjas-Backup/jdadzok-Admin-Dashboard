@@ -22,7 +22,7 @@ export function ActivityDashboard({ data }) {
 		},
 	];
 	return (
-		<div className="grid grid-cols-1 gap-6 lg:grid-cols-[35%_63%]">
+		<div className="grid grid-cols-1 gap-6 lg:grid-cols-[35%_63%] ">
 			{/* Activity Distribution Card */}
 			<div className="rounded-lg border border-gray-300 bg-white p-6">
 				<h2 className="text-lg font-semibold text-gray-900 mb-6">
@@ -31,7 +31,7 @@ export function ActivityDashboard({ data }) {
 
 				<div className="flex flex-col items-center">
 					{/* Donut Chart */}
-					<div className="w-64 h-64">
+					<div className="w-64 h-64 [&_*]:outline-none [&_*:focus]:outline-none">
 						<ResponsiveContainer width="100%" height="100%">
 							<PieChart>
 								<Pie

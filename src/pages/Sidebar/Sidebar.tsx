@@ -140,7 +140,7 @@ export default function Sidebar() {
 					</div>
 					<button
 						onClick={handleLogout}
-						className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded"
+						className="cursor-pointer bg-red-500 border text-white px-3 py-1.5 rounded-md hover:bg-white hover:border-red-500 hover:text-red-500"
 					>
 						Logout
 					</button>
