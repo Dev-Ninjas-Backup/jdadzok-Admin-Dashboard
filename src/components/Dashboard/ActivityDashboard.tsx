@@ -2,22 +2,24 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { PendingApprovals } from "./PendingApprovals";
+import { useGetAllActivityQuery } from "@/redux/features/dashboard/dashboardApi";
 
-export function ActivityDashboard({ data }) {
+export function ActivityDashboard() {
+	const { data } = useGetAllActivityQuery(undefined);
 	const activityData = [
 		{
 			name: "Events",
-			value: data?.volunteerProjects,
+			value: data?.activityDivision?.volunteerProjects,
 			color: "#3b82f6",
 		},
 		{
 			name: "Marketplace",
-			value: data?.marketplacePromotions,
+			value: data?.activityDivision?.marketplacePromotions,
 			color: "#10b981",
 		},
 		{
 			name: "Donations",
-			value: data?.donations,
+			value: data?.activityDivision?.donations,
 			color: "#f59e0b",
 		},
 	];

@@ -1,4 +1,8 @@
 import {
+	useGetRevenueCategoryQuery,
+	useGetRevenueGrowthQuery,
+} from "@/redux/features/IncomeAnalytics/IncomeAnalyticsApi";
+import {
 	LineChart,
 	Line,
 	BarChart,
@@ -13,52 +17,46 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
-const revenueGrowthData = [
-	{ month: "Jan", revenue: 15000, commission: 1500 },
-	{ month: "Feb", revenue: 18000, commission: 1800 },
-	{ month: "Mar", revenue: 22000, commission: 2200 },
-	{ month: "Apr", revenue: 28000, commission: 2800 },
-	{ month: "May", revenue: 38000, commission: 3800 },
-	{ month: "Jun", revenue: 52000, commission: 5200 },
-];
-
-const categoryData = [
-	{ name: "Marketplace", value: 45, amount: 24210 },
-	{ name: "Events", value: 30, amount: 16140 },
-	{ name: "Donations", value: 15, amount: 8070 },
-	{ name: "Memberships", value: 10, amount: 5380 },
-];
-
-const performanceData = [
-	{ month: "Jan", revenue: 12000, commission: 1200 },
-	{ month: "Feb", revenue: 15000, commission: 1500 },
-	{ month: "Mar", revenue: 20000, commission: 2000 },
-	{ month: "Apr", revenue: 28000, commission: 2800 },
-	{ month: "May", revenue: 35000, commission: 3500 },
-	{ month: "Jun", revenue: 52000, commission: 5200 },
-];
-
 const COLORS = ["#3b82f6", "#10b981", "#a855f7", "#f59e0b"];
 
 export function IncomeCharts() {
+	const { data: revenue } = useGetRevenueGrowthQuery(undefined);
+	const { data } = useGetRevenueCategoryQuery(undefined);
+
+	const categoryData = [
+		{
+			name: "Marketplace",
+			value: data?.volunteerProjects,
+			// amount: 24210,
+		},
+		{
+			name: "Events",
+			value: data?.marketplacePromotions,
+			// amount: 16140
+		},
+		{
+			name: "Donations",
+			value: data?.donations,
+			// amount: 8070,
+		},
+	];
+
 	return (
 		<div className="w-full space-y-6">
 			{/* Top Row: Revenue Growth and Revenue by Category */}
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+			<div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
 				{/* Revenue Growth Chart */}
 				<div className="bg-white border border-gray-200 rounded-lg p-6">
 					<div className="mb-6">
-						<h3 className="text-base font-semibold text-gray-900">
-							Revenue Growth
-						</h3>
-						<p className="text-sm text-gray-500">
+						<h3 className="text-base  text-[#101828]">Revenue Growth</h3>
+						<p className="text-sm text-[#4A5565] pt-1.5">
 							Monthly revenue and commission trends
 						</p>
 					</div>
 					<div className="w-full h-80 [&_*]:outline-none [&_*:focus]:outline-none">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart
-								data={revenueGrowthData}
+								data={revenue?.revenueTrends}
 								margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
 							>
 								<CartesianGrid
@@ -70,6 +68,7 @@ export function IncomeCharts() {
 									dataKey="month"
 									stroke="#6b7280"
 									style={{ fontSize: "12px" }}
+									tickFormatter={(value) => value.slice(0, 3)}
 								/>
 								<YAxis stroke="#6b7280" style={{ fontSize: "12px" }} />
 								<Tooltip
@@ -81,20 +80,20 @@ export function IncomeCharts() {
 								/>
 								<Line
 									type="monotone"
-									dataKey="revenue"
+									dataKey="total"
 									stroke="#3b82f6"
 									strokeWidth={2}
 									dot={{ fill: "#3b82f6", r: 4 }}
 									activeDot={{ r: 5 }}
 								/>
-								<Line
+								{/* <Line
 									type="monotone"
 									dataKey="commission"
 									stroke="#10b981"
 									strokeWidth={2}
 									dot={{ fill: "#10b981", r: 4 }}
 									activeDot={{ r: 5 }}
-								/>
+								/> */}
 							</LineChart>
 						</ResponsiveContainer>
 					</div>
@@ -149,9 +148,9 @@ export function IncomeCharts() {
 											<p className="text-sm font-medium text-gray-900">
 												{category.name}
 											</p>
-											<p className="text-xs text-gray-500">
+											{/* <p className="text-xs text-gray-500">
 												${(category.amount / 1000).toFixed(0)}k
-											</p>
+											</p> */}
 										</div>
 									</div>
 									<p className="text-sm font-medium text-gray-900 ml-2">
@@ -168,9 +167,9 @@ export function IncomeCharts() {
 			<div className="relative">
 				<div className="bg-white border border-gray-200 rounded-lg p-6">
 					<div className="absolute top-6 right-6">
-						<button className="text-sm text-gray-600 hover:text-gray-900 font-medium">
+						{/* <button className="text-sm text-gray-600 hover:text-gray-900 font-medium">
 							View Full Report
-						</button>
+						</button> */}
 					</div>
 					<div className="mb-6">
 						<h3 className="text-base font-semibold text-gray-900">
@@ -181,7 +180,7 @@ export function IncomeCharts() {
 					<div className="w-full h-80 [&_*]:outline-none [&_*:focus]:outline-none">
 						<ResponsiveContainer width="100%" height="100%">
 							<BarChart
-								data={performanceData}
+								data={revenue?.revenueTrends}
 								margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
 							>
 								<CartesianGrid
@@ -193,6 +192,7 @@ export function IncomeCharts() {
 									dataKey="month"
 									stroke="#6b7280"
 									style={{ fontSize: "12px" }}
+									tickFormatter={(value) => value.slice(0, 3)}
 								/>
 								<YAxis stroke="#6b7280" style={{ fontSize: "12px" }} />
 								<Tooltip
@@ -202,12 +202,12 @@ export function IncomeCharts() {
 										borderRadius: "6px",
 									}}
 								/>
-								<Bar dataKey="revenue" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-								<Bar
+								<Bar dataKey="total" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+								{/* <Bar
 									dataKey="commission"
 									fill="#10b981"
 									radius={[4, 4, 0, 0]}
-								/>
+								/> */}
 							</BarChart>
 						</ResponsiveContainer>
 					</div>

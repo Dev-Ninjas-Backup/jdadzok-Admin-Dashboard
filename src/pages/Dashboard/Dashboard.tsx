@@ -3,7 +3,6 @@ import StatCard from "@/components/common/DashboardStatCard";
 import { ActivityDashboard } from "@/components/Dashboard/ActivityDashboard";
 import RecentReports from "@/components/Dashboard/RecentReports";
 import {
-	useGetAllActivityQuery,
 	useGetAllDashboardOverviewQuery,
 	useGetAllRevenueTrendsQuery,
 	useGetAllUserGrowthQuery,
@@ -33,7 +32,6 @@ export default function DashboardOverview() {
 	const { data } = useGetAllDashboardOverviewQuery(undefined);
 	const { data: growth } = useGetAllUserGrowthQuery(undefined);
 	const { data: revenue } = useGetAllRevenueTrendsQuery(undefined);
-	const { data: activity } = useGetAllActivityQuery(undefined);
 
 	const stats = [
 		{
@@ -41,32 +39,32 @@ export default function DashboardOverview() {
 			value: `${data?.usersThisMonth}`,
 			change: `+${data?.userIncreasePercent}% from last month`,
 			icon: Users,
-			iconColor: "text-blue-500",
-			bgColor: "bg-blue-50",
+			iconColor: "#155DFC",
+			bgColor: "#F9FAFB",
 		},
 		{
 			label: "Verified Communities",
 			value: `${data?.totalCommunities}`,
 			change: `+${data?.communitiesIncreasePercent} new this week`,
 			icon: Building2,
-			iconColor: "text-green-500",
-			bgColor: "bg-green-50",
+			iconColor: "#00A63E",
+			bgColor: "#F9FAFB",
 		},
 		{
 			label: "Active Events",
 			value: `${data?.activeVolunteerProjectsCount}`,
 			change: `${data?.volunteerProjectsIncreasePercent} happening today`,
 			icon: Calendar,
-			iconColor: "text-purple-500",
-			bgColor: "bg-purple-50",
+			iconColor: "#9810FA",
+			bgColor: "#F9FAFB",
 		},
 		{
 			label: "Marketplace Revenue",
 			value: `$${data?.marketplacePromotionEarningsThisMonth}`,
 			change: `+${data?.promoIncreasePercent}% from last month`,
 			icon: ShoppingBag,
-			iconColor: "text-orange-500",
-			bgColor: "bg-orange-50",
+			iconColor: "#F54900",
+			bgColor: "#F9FAFB",
 		},
 	];
 
@@ -78,8 +76,8 @@ export default function DashboardOverview() {
 				<DashboardHeader
 					title="Dashboard Overview"
 					subtitle="Welcome back! Here's what's happening on your platform."
-					buttonLabel="Download Report"
-					onButtonClick={() => console.log("Download clicked")}
+					// buttonLabel="Download Report"
+					// onButtonClick={() => console.log("Download clicked")}
 				/>
 			</div>
 
@@ -179,7 +177,7 @@ export default function DashboardOverview() {
 			</div>
 
 			<div className="space-y-8 py-8">
-				<ActivityDashboard data={activity?.activityDivision} />
+				<ActivityDashboard />
 				<RecentReports />
 			</div>
 		</main>

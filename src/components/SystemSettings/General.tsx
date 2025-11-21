@@ -1,4 +1,4 @@
-import { Database, Globe } from "lucide-react";
+import { Globe } from "lucide-react";
 import { useState } from "react";
 
 export default function General() {
@@ -6,9 +6,9 @@ export default function General() {
 	const [supportEmail, setSupportEmail] = useState("support@platform.com");
 	const [platformUrl, setPlatformUrl] = useState("https://platform.com");
 	const [maintenanceMode, setMaintenanceMode] = useState(false);
-	const [backupMode, setBackupMode] = useState(false);
+	// const [backupMode, setBackupMode] = useState(false);
 	const [maxEvents, setMaxEvents] = useState("10");
-	const [maxDays, setMaxDays] = useState("90");
+	// const [maxDays, setMaxDays] = useState("90");
 	const [maxPosts, setMaxPosts] = useState("5");
 
 	return (
@@ -121,8 +121,9 @@ export default function General() {
 					</div>
 				</div>
 			</div>
-			<div className="w-full  mx-auto bg-white rounded-xl border border-[#0000001a] p-6">
-				{/* Header */}
+
+			{/* <div className="w-full  mx-auto bg-white rounded-xl border border-[#0000001a] p-6">
+			
 				<div className="flex items-center gap-3 mb-12">
 					<Database size={20} className="text-[#155DFC]" />
 
@@ -162,7 +163,7 @@ export default function General() {
 						</div>
 					</div>
 
-					{/* Max Events Per Community */}
+			
 					<div>
 						<label className="block text-sm font-medium text-[#364153] mb-2">
 							Data Retention (days)
@@ -184,7 +185,7 @@ export default function General() {
 						</button>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }

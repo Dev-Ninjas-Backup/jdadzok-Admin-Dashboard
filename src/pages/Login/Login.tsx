@@ -48,6 +48,7 @@ const Login: React.FC = () => {
 				})
 			);
 			navigate("/dashboard");
+			toast.success("Login successfully");
 		} catch (err) {
 			console.error(err);
 			toast.error("Login failed");
