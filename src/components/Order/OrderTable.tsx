@@ -88,14 +88,14 @@ const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
 							{/* Seller */}
 							<td className="px-4 py-4">
 								<span className="text-sm text-[#364153] whitespace-nowrap">
-									{product.buyer.profile.name}
+									{product?.buyer?.profile?.name}
 								</span>
 							</td>
 
 							{/* Category */}
 							<td className="px-4 py-4">
 								<span className="text-sm text-[#0A0A0A] whitespace-nowrap">
-									{product.product.title}
+									{product?.product.title}
 								</span>
 							</td>
 
@@ -109,14 +109,14 @@ const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
 							{/* Stock */}
 							<td className="px-4 py-4">
 								<span className={`text-sm font-medium whitespace-nowrap`}>
-									{product.totalPrice}
+									{product?.totalPrice}
 								</span>
 							</td>
 
 							{/* Sales */}
 							<td className="px-4 py-4">
 								<span className="text-sm text-[#00A63E]">
-									{formatValue(product.product?.promotionFee ?? 0)}
+									{formatValue(product?.product?.promotionFee ?? 0)}
 								</span>
 							</td>
 

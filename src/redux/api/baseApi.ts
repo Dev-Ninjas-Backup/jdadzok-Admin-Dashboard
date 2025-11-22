@@ -21,6 +21,8 @@ export const baseApi = createApi({
 		"Transaction",
 		"Dashboard",
 		"IncomeAnalytics",
+		"Notification",
+		"SystemSetting",
 	],
 	endpoints: () => ({}),
 });

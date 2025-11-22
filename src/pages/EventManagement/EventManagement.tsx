@@ -6,9 +6,8 @@ import { useEvent } from "@/redux/features/event/hooks/useEvent";
 import { useState } from "react";
 
 export default function EventManagement() {
-	const [search, setSearch] = useState("");
 	const { data } = useGetAllEventOverviewQuery(undefined);
-
+	const [search, setSearch] = useState("");
 	const { event, page, setPage, totalPages } = useEvent({
 		search,
 	});
