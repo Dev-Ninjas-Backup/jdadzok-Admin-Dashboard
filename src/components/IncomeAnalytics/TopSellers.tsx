@@ -24,7 +24,7 @@ export function TopSellers() {
 
 			{/* Sellers List */}
 			<div className="space-y-4">
-				{data?.topSellers.map((seller: Seller, index: number) => (
+				{data?.topSellers?.map((seller: Seller, index: number) => (
 					<div
 						key={index}
 						className="flex flex-col md:flex-row md:items-center justify-between py-4 px-4 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors"
