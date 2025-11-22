@@ -21,7 +21,7 @@ export const systemSettingsApi = baseApi.injectEndpoints({
 
 		getMaintenance: builder.query({
 			query: () => ({
-				url: "/notification-admin/stats",
+				url: "/settings-admin/maintenance",
 				method: "GET",
 			}),
 			providesTags: ["SystemSetting"],
@@ -29,7 +29,7 @@ export const systemSettingsApi = baseApi.injectEndpoints({
 
 		getPlatform: builder.query({
 			query: () => ({
-				url: "/notification-admin/latest",
+				url: "/settings-admin/platform",
 				method: "GET",
 			}),
 			providesTags: ["SystemSetting"],
@@ -37,5 +37,9 @@ export const systemSettingsApi = baseApi.injectEndpoints({
 	}),
 });
 
-export const { usePlatformMutation, useMaintenanceMutation } =
-	systemSettingsApi;
+export const {
+	usePlatformMutation,
+	useMaintenanceMutation,
+	useGetMaintenanceQuery,
+	useGetPlatformQuery,
+} = systemSettingsApi;

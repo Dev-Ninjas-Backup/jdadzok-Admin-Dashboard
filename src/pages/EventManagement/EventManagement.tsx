@@ -30,21 +30,21 @@ export default function EventManagement() {
 			title: "Upcoming",
 			value: `${data?.upcoming}`,
 			subtitle: "Ready to start" as string | undefined,
-			subtitleColor: "#155DFC", // Blue color
+			subtitleColor: "#155DFC",
 			subtitleIcon: null,
 		},
 		{
 			title: "Ongoing",
 			value: `${data?.ongoing}`,
 			subtitle: "In progress" as string | undefined,
-			subtitleColor: "#00A63E", // Green color
+			subtitleColor: "#00A63E",
 			subtitleIcon: null,
 		},
 		{
 			title: "Pending Approval",
 			value: `${data?.pendingApproval}`,
 			subtitle: "Awaiting review" as string | undefined,
-			subtitleColor: "#F54900", // Orange color
+			subtitleColor: "#F54900",
 			subtitleIcon: null,
 		},
 	];

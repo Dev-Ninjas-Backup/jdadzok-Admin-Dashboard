@@ -1,21 +1,38 @@
 import {
+	useGetMaintenanceQuery,
+	useGetPlatformQuery,
 	useMaintenanceMutation,
 	usePlatformMutation,
 } from "@/redux/features/systemSettings/systemSettingsApi";
 import { Globe, Save } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function General() {
-	const [platformName, setPlatformName] = useState("Community Platform");
-	const [supportEmail, setSupportEmail] = useState("support@platform.com");
-	const [platformUrl, setPlatformUrl] = useState("https://platform.com");
-	const [maxPosts, setMaxPosts] = useState("5");
-	const [maxEvents, setMaxEvents] = useState("10");
+	const [platformName, setPlatformName] = useState("");
+	const [supportEmail, setSupportEmail] = useState("");
+	const [platformUrl, setPlatformUrl] = useState("");
+	const [maxPosts, setMaxPosts] = useState("");
+	const [maxEvents, setMaxEvents] = useState("");
 	// const [maintenanceMode, setMaintenanceMode] = useState(false);
 	// const [backupMode, setBackupMode] = useState(false);
 	// const [maxDays, setMaxDays] = useState("90");
 	const [platform] = usePlatformMutation();
 	const [maintenance] = useMaintenanceMutation();
+	const { data: maintData } = useGetMaintenanceQuery(undefined);
+	const { data: platData } = useGetPlatformQuery(undefined);
+
+	useEffect(() => {
+		if (platData) {
+			setPlatformName(platData?.settings?.platformName);
+			setSupportEmail(platData.settings?.supportEmail);
+			setPlatformUrl(platData?.settings?.platformUrl);
+		}
+
+		if (maintData) {
+			setMaxEvents(maintData?.settings?.maxEventsPerCommunity);
+			setMaxPosts(maintData?.settings?.MaxPostPerDay);
+		}
+	}, [platData, maintData]);
 
 	const handleSubmit = async () => {
 		try {
