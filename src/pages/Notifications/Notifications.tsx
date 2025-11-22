@@ -5,7 +5,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { useState } from "react";
-import { useGetNotificationOverviewQuery } from "@/redux/features/notification/notificationApi";
+import {
+	useGetNotificationOverviewQuery,
+	useNotificationMutation,
+	useScheduleNotificationMutation,
+} from "@/redux/features/notification/notificationApi";
 
 // interface Transaction {
 // 	id: string;
@@ -51,9 +55,28 @@ export default function Notifications() {
 	const [formattedSchedule, setFormattedSchedule] = useState<string>(""); // for sending
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const { data } = useGetNotificationOverviewQuery(undefined);
+	const [notification] = useNotificationMutation();
+	const [scheduleNotification] = useScheduleNotificationMutation();
 
-	const handleSendNow = () => {
-		console.log("Sending notification:", { formattedSchedule, title, message });
+	const handleSendNow = async () => {
+		try {
+			if (formattedSchedule) {
+				await scheduleNotification({
+					title,
+					message,
+					formattedSchedule,
+				}).unwrap();
+				console.log("Sending notification with");
+			} else {
+				await notification({
+					title,
+					message,
+				}).unwrap();
+				console.log("Sending notification");
+			}
+		} catch (err) {
+			console.log("Sending notification failed", err);
+		}
 	};
 
 	const handleSchedule = () => setShowDatePicker(true);
@@ -182,30 +205,28 @@ export default function Notifications() {
 						{/* Date Picker Popup */}
 						{showDatePicker && (
 							<div className="absolute z-50 mt-2 bg-white p-3 rounded-lg shadow-lg">
-								<div className="flex justify-end mb-2">
-									<button
-										onClick={() => setShowDatePicker(false)}
-										className="text-gray-500 cursor-pointer  hover:text-red-700"
-									>
-										✕
-									</button>
-								</div>
-
 								<DatePicker
 									selected={scheduleDate}
 									onChange={(date) => {
-										setScheduleDate(date); // Keep Date object
+										setScheduleDate(date);
 										if (date) {
-											const formatted = format(date, "dd-MM-yy-h.mm a");
-											setFormattedSchedule(formatted); // For API
-											console.log("Scheduled for:", formatted);
+											const formatted = format(date, "yyyy-MM-dd h.mm a");
+											setFormattedSchedule(formatted);
 										}
 									}}
 									showTimeSelect
 									inline
 									minDate={new Date()}
-									shouldCloseOnSelect={false} // ❌ Prevent auto-close
+									shouldCloseOnSelect={false}
 								/>
+								<div className="flex justify-end mt-2">
+									<button
+										onClick={() => setShowDatePicker(false)}
+										className="text-white rounded-lg cursor-pointer bg-[#008236] px-3 py-1.5  hover:text-[#008236] hover:bg-white border hover:border-[#008236]"
+									>
+										Done
+									</button>
+								</div>
 							</div>
 						)}
 					</div>

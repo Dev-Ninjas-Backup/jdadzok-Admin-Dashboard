@@ -1,7 +1,7 @@
 import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import SearchBar from "@/components/common/SearchBar";
 import PayoutManagementTable from "@/components/PayoutManagement/PayoutManagementTable";
-import { useGetPayoutOverviewQuery } from "@/redux/features/payout/payoutApi";
+// import { useGetPayoutOverviewQuery } from "@/redux/features/payout/payoutApi";
 import { Clock, DollarSign } from "lucide-react";
 import { useState } from "react";
 
@@ -44,7 +44,7 @@ const sampleTransactions: Transaction[] = [
 
 export default function PayoutManagement() {
 	const [searchValue, setSearchValue] = useState("");
-	const { data: overView } = useGetPayoutOverviewQuery(undefined);
+	// const { data: overView } = useGetPayoutOverviewQuery(undefined);
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value);
