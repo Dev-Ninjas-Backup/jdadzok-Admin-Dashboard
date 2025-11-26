@@ -1,4 +1,4 @@
-import { ChevronDown, Filter } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import SearchBar from "../common/SearchBar";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 	onSearchChange,
 	onStatusChange,
 	onRoleChange,
-	onMoreFiltersClick,
+	// onMoreFiltersClick,
 }) => {
 	const [searchValue, setSearchValue] = useState("");
 	const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
@@ -100,13 +100,13 @@ const FilterBar: React.FC<FilterBarProps> = ({
 				</div>
 
 				{/* More Filters Button */}
-				<button
+				{/* <button
 					onClick={onMoreFiltersClick}
 					className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors focus:outline-none whitespace-nowrap"
 				>
 					<Filter size={16} />
 					More Filters
-				</button>
+				</button> */}
 			</div>
 		</div>
 	);
