@@ -2,27 +2,29 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { PendingApprovals } from "./PendingApprovals";
+import { useGetAllActivityQuery } from "@/redux/features/dashboard/dashboardApi";
 
-export function ActivityDashboard({ data }) {
+export function ActivityDashboard() {
+	const { data } = useGetAllActivityQuery(undefined);
 	const activityData = [
 		{
 			name: "Events",
-			value: data?.volunteerProjects,
+			value: data?.activityDivision?.volunteerProjects,
 			color: "#3b82f6",
 		},
 		{
 			name: "Marketplace",
-			value: data?.marketplacePromotions,
+			value: data?.activityDivision?.marketplacePromotions,
 			color: "#10b981",
 		},
 		{
 			name: "Donations",
-			value: data?.donations,
+			value: data?.activityDivision?.donations,
 			color: "#f59e0b",
 		},
 	];
 	return (
-		<div className="grid grid-cols-1 gap-6 lg:grid-cols-[35%_63%]">
+		<div className="grid grid-cols-1 gap-6 lg:grid-cols-[35%_63%] ">
 			{/* Activity Distribution Card */}
 			<div className="rounded-lg border border-gray-300 bg-white p-6">
 				<h2 className="text-lg font-semibold text-gray-900 mb-6">
@@ -31,7 +33,7 @@ export function ActivityDashboard({ data }) {
 
 				<div className="flex flex-col items-center">
 					{/* Donut Chart */}
-					<div className="w-64 h-64">
+					<div className="w-64 h-64 [&_*]:outline-none [&_*:focus]:outline-none">
 						<ResponsiveContainer width="100%" height="100%">
 							<PieChart>
 								<Pie

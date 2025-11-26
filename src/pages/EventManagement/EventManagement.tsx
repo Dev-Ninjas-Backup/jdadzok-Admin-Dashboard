@@ -6,9 +6,8 @@ import { useEvent } from "@/redux/features/event/hooks/useEvent";
 import { useState } from "react";
 
 export default function EventManagement() {
-	const [search, setSearch] = useState("");
 	const { data } = useGetAllEventOverviewQuery(undefined);
-
+	const [search, setSearch] = useState("");
 	const { event, page, setPage, totalPages } = useEvent({
 		search,
 	});
@@ -31,21 +30,21 @@ export default function EventManagement() {
 			title: "Upcoming",
 			value: `${data?.upcoming}`,
 			subtitle: "Ready to start" as string | undefined,
-			subtitleColor: "#155DFC", // Blue color
+			subtitleColor: "#155DFC",
 			subtitleIcon: null,
 		},
 		{
 			title: "Ongoing",
 			value: `${data?.ongoing}`,
 			subtitle: "In progress" as string | undefined,
-			subtitleColor: "#00A63E", // Green color
+			subtitleColor: "#00A63E",
 			subtitleIcon: null,
 		},
 		{
 			title: "Pending Approval",
 			value: `${data?.pendingApproval}`,
 			subtitle: "Awaiting review" as string | undefined,
-			subtitleColor: "#F54900", // Orange color
+			subtitleColor: "#F54900",
 			subtitleIcon: null,
 		},
 	];
@@ -61,9 +60,9 @@ export default function EventManagement() {
 						Monitor and manage all community events
 					</p>
 				</div>
-				<button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
+				{/* <button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
 					Create Event
-				</button>
+				</button> */}
 			</div>
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 				{stats.map((stat, index) => (

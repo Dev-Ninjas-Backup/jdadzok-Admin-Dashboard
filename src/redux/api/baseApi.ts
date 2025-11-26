@@ -20,6 +20,10 @@ export const baseApi = createApi({
 		"Marketplace",
 		"Transaction",
 		"Dashboard",
+		"IncomeAnalytics",
+		"Notification",
+		"SystemSetting",
+		"Payout",
 	],
 	endpoints: () => ({}),
 });
