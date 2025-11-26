@@ -12,7 +12,6 @@ interface Event {
 }
 
 const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
-	console.log(data);
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">

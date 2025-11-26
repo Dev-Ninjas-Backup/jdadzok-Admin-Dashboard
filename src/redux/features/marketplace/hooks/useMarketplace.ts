@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react";
-import { useGetAllEventQuery } from "../eventApi";
+import { useGetAllMarketplaceQuery } from "../marketplaceApi";
 
-export const useEvent = (filters = {}) => {
+export const useMarketplace = (filters = {}) => {
 	const [page, setPage] = useState(1);
-
 	const queryParams = useMemo(
 		() => ({
 			page,
@@ -13,16 +12,15 @@ export const useEvent = (filters = {}) => {
 		[page, filters]
 	);
 
-	const { data, isLoading, isError } = useGetAllEventQuery(queryParams);
+	const { data, isLoading, isError } = useGetAllMarketplaceQuery(queryParams);
 
 	// Normalize data
-	const event = Array.isArray(data) ? data : [];
-	const totalPages = data?.pagination?.pages ?? 1;
-	const total = data?.pagination?.total ?? 0;
+	const market = Array.isArray(data?.data) ? data.data : [];
+	const totalPages = data?.meta?.totalPages ?? 1;
+	const total = data?.meta?.total ?? 0;
 	const currentPage = data?.pagination?.page ?? page;
-
 	return {
-		event,
+		market,
 		isLoading,
 		isError,
 		page: currentPage,

@@ -12,7 +12,15 @@ export const baseApi = createApi({
 			return headers;
 		},
 	}),
-	tagTypes: ["Auth", "Users", "Community", "Events"],
+	tagTypes: [
+		"Auth",
+		"Users",
+		"Community",
+		"Events",
+		"Marketplace",
+		"Transaction",
+		"Dashboard",
+	],
 	endpoints: () => ({}),
 });
 

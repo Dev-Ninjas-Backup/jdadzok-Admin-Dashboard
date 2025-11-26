@@ -2,7 +2,7 @@ import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import SearchBar from "@/components/common/SearchBar";
 import EventTable from "@/components/Event/EventTable";
 import { useGetAllEventOverviewQuery } from "@/redux/features/event/eventApi";
-import { useEvent } from "@/redux/features/event/hooks/event";
+import { useEvent } from "@/redux/features/event/hooks/useEvent";
 import { useState } from "react";
 
 export default function EventManagement() {
@@ -18,7 +18,7 @@ export default function EventManagement() {
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value);
 	};
-	console.log("event", event);
+
 	const stats = [
 		{
 			title: "Total Events",

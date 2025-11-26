@@ -4,6 +4,7 @@ import {
 	useSuspendUserMutation,
 } from "@/redux/features/user/userApi";
 import { TrendingUp } from "lucide-react";
+import toast from "react-hot-toast";
 
 export interface User {
 	id: string;
@@ -26,19 +27,24 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
 
 	const getInitials = (name?: string) => {
 		if (!name) return "?";
-		return name
+
+		const initials = name
 			.split(" ")
 			.map((word) => word[0])
 			.join("")
 			.toUpperCase();
+
+		return initials.slice(0, 3); // limit to 3 chars
 	};
 
 	const handleAction = async (id: string, status: string) => {
 		try {
 			if (status === "active") {
 				await suspendUser(id).unwrap();
+				toast.success("Suspend account successfully !");
 			} else {
 				await activeUser(id).unwrap();
+				toast.success("Active account successfully !");
 			}
 		} catch (error) {
 			console.error("Action failed:", error);

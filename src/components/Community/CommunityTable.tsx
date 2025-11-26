@@ -7,25 +7,30 @@ interface Community {
 	initials: string;
 	title: string;
 	type: string;
-	leader: string;
+	ownerName: string;
 	followersCount: number;
 	level: number;
-	events: number;
+	projectsCount: number;
 	id: string;
+	verificationId: string;
 	status: "verified" | "pending";
 }
 
 const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 	const getInitials = (name?: string) => {
 		if (!name) return "?";
-		return name
+
+		const initials = name
 			.split(" ")
 			.map((word) => word[0])
 			.join("")
 			.toUpperCase();
+
+		return initials.slice(0, 3); // limit to 3 chars
 	};
 
 	const [simplePopup, setSimplePopup] = useState(false);
+	const [selectedId, setSelectedId] = useState<string>();
 
 	return (
 		<div className="w-full overflow-x-auto">
@@ -44,9 +49,9 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Members
 						</th>
-						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
+						{/* <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Level
-						</th>
+						</th> */}
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Events
 						</th>
@@ -86,7 +91,7 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							{/* Leader */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal whitespace-nowrap">
-									{row.leader}
+									{row.ownerName}
 								</span>
 							</td>
 
@@ -98,16 +103,16 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							</td>
 
 							{/* Level */}
-							<td className="px-6 py-4">
+							{/* <td className="px-6 py-4">
 								<div className="w-8 h-8 rounded-full bg-[#F3E8FF] flex items-center justify-center text-sm font-medium text-[#8200DB]">
 									{row.level}
 								</div>
-							</td>
+							</td> */}
 
 							{/* Events */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row.events}
+									{row.projectsCount}
 								</span>
 							</td>
 
@@ -141,9 +146,12 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 										<Eye size={16} />
 										View
 									</button>
-									{row.status === "pending" && (
+									{row.verificationId && row?.type === "NGO" && (
 										<button
-											onClick={() => setSimplePopup(true)}
+											onClick={() => {
+												setSelectedId(row?.verificationId);
+												setSimplePopup(true);
+											}}
 											className="cursor-pointer px-3 py-1.5 bg-[#030213] text-white text-sm rounded-xl hover:bg-gray-800 transition-colors"
 										>
 											Review
@@ -151,18 +159,18 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 									)}
 								</div>
 							</td>
-							<CustomPopup
-								isOpen={simplePopup}
-								onClose={() => setSimplePopup(false)}
-								title="Community & NGO Management"
-								size="md"
-							>
-								<Review id={row?.id} setSimplePopup={setSimplePopup} />
-							</CustomPopup>
 						</tr>
 					))}
 				</tbody>
 			</table>
+			<CustomPopup
+				isOpen={simplePopup}
+				onClose={() => setSimplePopup(false)}
+				title="Community & NGO Management"
+				size="md"
+			>
+				<Review id={selectedId} setSimplePopup={setSimplePopup} />
+			</CustomPopup>
 		</div>
 	);
 };
