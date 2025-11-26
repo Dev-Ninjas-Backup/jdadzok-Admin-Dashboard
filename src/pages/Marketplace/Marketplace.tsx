@@ -73,9 +73,9 @@ export default function Marketplace() {
 						Manage products, sellers, and marketplace activities
 					</p>
 				</div>
-				<button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
+				{/* <button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
 					Add Product
-				</button>
+				</button> */}
 			</div>
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 				{stats.map((stat, index) => (

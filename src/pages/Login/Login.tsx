@@ -5,6 +5,7 @@ import logo from "../../assets/images/logo.png";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { setCredentials } from "@/redux/slices/authSlice";
+import toast from "react-hot-toast";
 
 interface LoginFormData {
 	email: string;
@@ -47,9 +48,10 @@ const Login: React.FC = () => {
 				})
 			);
 			navigate("/dashboard");
+			toast.success("Login successfully");
 		} catch (err) {
 			console.error(err);
-			alert("Login failed");
+			toast.error("Login failed");
 		}
 	};
 

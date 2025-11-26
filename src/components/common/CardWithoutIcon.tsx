@@ -1,6 +1,8 @@
+import { formatValue } from "@/utils/formatValue";
+
 interface CardWithoutIconProps {
 	title: string;
-	value: string;
+	value: string | number;
 	subtitle?: string;
 	subtitleColor?: string;
 	leftIconColor?: string;
@@ -43,7 +45,9 @@ const CardWithoutIcon: React.FC<CardWithoutIconProps> = ({
 			)}
 			<div className="flex flex-col " style={{ gap: `${gap}px` }}>
 				<p className="text-sm font-normal text-[#4A5565]">{title}</p>
-				<p className="text-md font-normal text-[#101828]">{value}</p>
+				<p className="text-md font-normal text-[#101828]">
+					{formatValue(value)}
+				</p>
 				<div className="flex items-center gap-1">
 					{subtitleIcon && (
 						<span style={{ color: subtitleColor }}>{subtitleIcon}</span>

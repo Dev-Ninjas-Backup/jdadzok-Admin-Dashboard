@@ -1,16 +1,54 @@
-import { Database, Globe } from "lucide-react";
-import { useState } from "react";
+import {
+	useGetMaintenanceQuery,
+	useGetPlatformQuery,
+	useMaintenanceMutation,
+	usePlatformMutation,
+} from "@/redux/features/systemSettings/systemSettingsApi";
+import { Globe, Save } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function General() {
-	const [platformName, setPlatformName] = useState("Community Platform");
-	const [supportEmail, setSupportEmail] = useState("support@platform.com");
-	const [platformUrl, setPlatformUrl] = useState("https://platform.com");
-	const [maintenanceMode, setMaintenanceMode] = useState(false);
-	const [backupMode, setBackupMode] = useState(false);
-	const [maxEvents, setMaxEvents] = useState("10");
-	const [maxDays, setMaxDays] = useState("90");
-	const [maxPosts, setMaxPosts] = useState("5");
+	const [platformName, setPlatformName] = useState("");
+	const [supportEmail, setSupportEmail] = useState("");
+	const [platformUrl, setPlatformUrl] = useState("");
+	const [maxPosts, setMaxPosts] = useState("");
+	const [maxEvents, setMaxEvents] = useState("");
+	// const [maintenanceMode, setMaintenanceMode] = useState(false);
+	// const [backupMode, setBackupMode] = useState(false);
+	// const [maxDays, setMaxDays] = useState("90");
+	const [platform] = usePlatformMutation();
+	const [maintenance] = useMaintenanceMutation();
+	const { data: maintData } = useGetMaintenanceQuery(undefined);
+	const { data: platData } = useGetPlatformQuery(undefined);
 
+	useEffect(() => {
+		if (platData) {
+			setPlatformName(platData?.settings?.platformName);
+			setSupportEmail(platData.settings?.supportEmail);
+			setPlatformUrl(platData?.settings?.platformUrl);
+		}
+
+		if (maintData) {
+			setMaxEvents(maintData?.settings?.maxEventsPerCommunity);
+			setMaxPosts(maintData?.settings?.MaxPostPerDay);
+		}
+	}, [platData, maintData]);
+
+	const handleSubmit = async () => {
+		try {
+			await platform({
+				platformName,
+				platformUrl,
+				supportEmail,
+			}).unwrap();
+			await maintenance({
+				maxEventsPerCommunity: maxEvents,
+				MaxPostPerDay: maxPosts,
+			}).unwrap();
+		} catch (err) {
+			console.log(err);
+		}
+	};
 	return (
 		<div className="space-y-6">
 			<div className="w-full  mx-auto bg-white rounded-xl border border-[#0000001a] p-6">
@@ -69,7 +107,7 @@ export default function General() {
 					</div>
 					<div className="border-b border-[#0000001a]" />
 					{/* Maintenance Mode */}
-					<div>
+					{/* <div>
 						<div className="flex items-center justify-between">
 							<div>
 								<label className="block text-sm font-medium text-[#101828]">
@@ -92,7 +130,7 @@ export default function General() {
 								/>
 							</button>
 						</div>
-					</div>
+					</div> */}
 
 					{/* Max Events Per Community */}
 					<div>
@@ -120,9 +158,19 @@ export default function General() {
 						/>
 					</div>
 				</div>
+				<div className="flex justify-end pt-4">
+					<button
+						onClick={handleSubmit}
+						className="flex items-center text-sm sm:text-base justify-center gap-0.5 sm:gap-2 w-auto cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2"
+					>
+						<Save size={16} />
+						Save All
+					</button>
+				</div>
 			</div>
-			<div className="w-full  mx-auto bg-white rounded-xl border border-[#0000001a] p-6">
-				{/* Header */}
+
+			{/* <div className="w-full  mx-auto bg-white rounded-xl border border-[#0000001a] p-6">
+			
 				<div className="flex items-center gap-3 mb-12">
 					<Database size={20} className="text-[#155DFC]" />
 
@@ -162,7 +210,7 @@ export default function General() {
 						</div>
 					</div>
 
-					{/* Max Events Per Community */}
+			
 					<div>
 						<label className="block text-sm font-medium text-[#364153] mb-2">
 							Data Retention (days)
@@ -184,7 +232,7 @@ export default function General() {
 						</button>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }
