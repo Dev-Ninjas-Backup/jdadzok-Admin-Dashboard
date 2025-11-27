@@ -1,6 +1,7 @@
 import DashboardHeader from "@/components/common/DashboardHeader";
 import StatCard from "@/components/common/DashboardStatCard";
 import { ActivityDashboard } from "@/components/Dashboard/ActivityDashboard";
+import RecentReports from "@/components/Dashboard/RecentReports";
 // import RecentReports from "@/components/Dashboard/RecentReports";
 import {
 	useGetAllDashboardOverviewQuery,
@@ -178,7 +179,7 @@ export default function DashboardOverview() {
 
 			<div className="space-y-8 py-8">
 				<ActivityDashboard />
-				{/* <RecentReports /> */}
+				<RecentReports />
 			</div>
 		</main>
 	);
