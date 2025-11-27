@@ -22,22 +22,23 @@ const COLORS = ["#3b82f6", "#10b981", "#a855f7", "#f59e0b"];
 export function IncomeCharts() {
 	const { data: revenue } = useGetRevenueGrowthQuery(undefined);
 	const { data } = useGetRevenueCategoryQuery(undefined);
+	// console.log(data.marketplaceTotalRevenue);
 
 	const categoryData = [
 		{
 			name: "Marketplace",
 			value: data?.volunteerProjects,
-			// amount: 24210,
+			amount: data?.marketplaceTotalRevenue,
 		},
 		{
 			name: "Events",
 			value: data?.marketplacePromotions,
-			// amount: 16140
+		
 		},
 		{
 			name: "Donations",
 			value: data?.donations,
-			// amount: 8070,
+			
 		},
 	];
 
@@ -148,9 +149,10 @@ export function IncomeCharts() {
 											<p className="text-sm font-medium text-gray-900">
 												{category.name}
 											</p>
-											{/* <p className="text-xs text-gray-500">
-												${(category.amount / 1000).toFixed(0)}k
-											</p> */}
+											{category.amount && <p className="text-xs text-gray-500">
+												${category?.amount}
+											</p>
+											}
 										</div>
 									</div>
 									<p className="text-sm font-medium text-gray-900 ml-2">
