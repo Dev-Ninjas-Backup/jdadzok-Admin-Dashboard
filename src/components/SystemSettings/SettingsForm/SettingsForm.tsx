@@ -19,7 +19,7 @@ export interface Settings {
   createdAt?: string;
   updatedAt?: string;
 }
-
+const inputClassName =`w-full px-4 py-2 bg-[#F3F3F5] border-0 rounded-lg text-sm text-[#0A0A0A] focus:outline-none focus:ring-2 focus:ring-gray-200`
 
 export default function SettingsForm() {
   const { data, isFetching, refetch } = useGetSettingsQuery(null);
@@ -65,8 +65,42 @@ export default function SettingsForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className=" bg-white shadow-lg p-8 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-6 my-10"
+      className=" w-full  mx-auto bg-white border border-[#0000001a] p-6 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-6 my-10"
     >
+      {/* ===== Form Fields ===== */}
+      <h2 className="text-2xl font-bold col-span-full text-gray-800 mb-4">
+        System Settings Configuration
+      </h2>
+
+      {Object.entries(formData).map(([key, value]) => {
+        if (["id", "createdAt", "updatedAt"].includes(key)) return null;
+        return (
+          <div key={key}>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {key.replace(/([A-Z])/g, " $1")}
+            </label>
+            <input
+              type="number"
+              min={0}
+              name={key}
+              value={value}
+              onChange={handleChange}
+              className={`${inputClassName}`}
+              required
+            />
+          </div>
+        );
+      })}
+      <div></div>
+     <div className="flex items-center text-sm sm:text-base justify-end">
+       <button
+        type="submit"
+        className="w-2/12  gap-0.5 sm:gap-2 cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 py-2.5"
+        disabled={isLoading}
+      >
+        {isLoading ? "Saving..." : "Save Settings"}
+      </button>
+     </div>
       {/* ===== Show Current Settings ===== */}
       {settings && (
         <div className="col-span-full bg-gray-50 border border-gray-200 p-5 rounded-lg mb-5">
@@ -89,39 +123,6 @@ export default function SettingsForm() {
           </div>
         </div>
       )}
-
-      {/* ===== Form Fields ===== */}
-      <h2 className="text-2xl font-bold col-span-full text-gray-800 mb-4">
-        System Settings Configuration
-      </h2>
-
-      {Object.entries(formData).map(([key, value]) => {
-        if (["id", "createdAt", "updatedAt"].includes(key)) return null;
-        return (
-          <div key={key}>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {key.replace(/([A-Z])/g, " $1")}
-            </label>
-            <input
-              type="number"
-              min={0}
-              name={key}
-              value={value}
-              onChange={handleChange}
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
-        );
-      })}
-
-      <button
-        type="submit"
-        className="col-span-full bg-black cursor-pointer text-white w-full py-3 rounded-lg  transition font-semibold disabled:bg-indigo-400"
-        disabled={isLoading}
-      >
-        {isLoading ? "Saving..." : "Save Settings"}
-      </button>
     </form>
   );
 }
