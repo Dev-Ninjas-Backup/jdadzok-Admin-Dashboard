@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useReviewReportMutation } from "@/redux/features/reports/reportsApi";
 import toast from "react-hot-toast";
+import { timeAgo } from "@/utils/timeAgo";
+
+
 
 interface IReporter {
   id: string;
@@ -22,7 +25,7 @@ const ReportItem: React.FC<IReportItemProps> = ({
   reporter,
   status,
 }) => {
-  const [reviewStatus, setReviewStatus] = useState(status); // 
+  const [reviewStatus, setReviewStatus] = useState(status); //
   const [reviewReport, { isLoading }] = useReviewReportMutation();
 
   const handleReview = async () => {
@@ -32,7 +35,7 @@ const ReportItem: React.FC<IReportItemProps> = ({
         adminNotes: "Reviewed and user warned for inappropriate behavior",
       }).unwrap();
 
-      setReviewStatus("REVIEWED"); // 👈 instantly change UI
+      setReviewStatus("REVIEWED");
       toast.success("Report reviewed successfully!");
     } catch (error) {
       toast.error("Failed to review report");
@@ -44,10 +47,10 @@ const ReportItem: React.FC<IReportItemProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 flex-1">
         <div className="flex flex-col">
           <div className="text-base font-semibold text-gray-800">{reason}</div>
+
           <div className="text-sm text-gray-500">
-            {new Date(createdAt).toLocaleString()}{" "}
-            <span className="text-gray-400">by</span> User #
-            {reporter?.id?.slice(0, 8)}
+            {timeAgo(createdAt)} <span className="text-gray-400">by</span> User
+            #{reporter?.id?.slice(0, 8)}
           </div>
         </div>
 

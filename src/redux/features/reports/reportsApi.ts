@@ -17,7 +17,7 @@ export const reportsApi = baseApi.injectEndpoints({
     /** Get current user's reports */
     getMyReports: builder.query({
       query: () => ({
-        url: "/reports/my-reports",
+        url: "/admin/dashboard/report",
         method: "GET",
       }),
       providesTags: ["Reports"],
