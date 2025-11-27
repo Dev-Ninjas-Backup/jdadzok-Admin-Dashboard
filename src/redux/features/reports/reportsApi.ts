@@ -1,7 +1,5 @@
 import baseApi from "@/redux/api/baseApi";
 
-
-
 export const reportsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     /** Submit a report */
@@ -16,8 +14,8 @@ export const reportsApi = baseApi.injectEndpoints({
 
     /** Get current user's reports */
     getMyReports: builder.query({
-      query: () => ({
-        url: "/admin/dashboard/report",
+      query: (page) => ({
+        url: `/admin/dashboard/report?page=${page}`,
         method: "GET",
       }),
       providesTags: ["Reports"],
@@ -36,4 +34,8 @@ export const reportsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSubmitReportMutation, useGetMyReportsQuery, useReviewReportMutation  } = reportsApi;
+export const {
+  useSubmitReportMutation,
+  useGetMyReportsQuery,
+  useReviewReportMutation,
+} = reportsApi;
