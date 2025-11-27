@@ -1,5 +1,6 @@
 // import Financial from "@/components/SystemSettings/Financial";
 import General from "@/components/SystemSettings/General";
+import SettingsForm from "@/components/SystemSettings/SettingsForm/SettingsForm";
 // import { Save } from "lucide-react";
 // import { useState } from "react";
 
@@ -45,6 +46,7 @@ export default function SystemSettings() {
 			</div>
 			{activeFilter === "general" ? <General /> : <Financial />} */}
 			<General />
+			<SettingsForm/>
 		</div>
 	);
 }

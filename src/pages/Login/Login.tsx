@@ -37,7 +37,7 @@ const Login: React.FC = () => {
 		e.preventDefault();
 
 		try {
-			const res: any = await login({
+			const res = await login({
 				email: formData.email,
 				password: formData.password,
 			}).unwrap();
