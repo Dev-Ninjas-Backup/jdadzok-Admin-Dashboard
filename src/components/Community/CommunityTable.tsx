@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, Clock } from "lucide-react";
 import Review from "./Review";
 import CustomPopup from "../common/CustomPopup";
 
@@ -142,10 +142,10 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							{/* Actions */}
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-2">
-									<button className="cursor-pointer flex items-center gap-1.5 text-sm bg-[#FFFFFF] text-[#0A0A0A] hover:text-gray-900 transition-colors px-3 py-1.5 rounded-xl border border-[#0000001a]">
+									{/* <button className="cursor-pointer flex items-center gap-1.5 text-sm bg-[#FFFFFF] text-[#0A0A0A] hover:text-gray-900 transition-colors px-3 py-1.5 rounded-xl border border-[#0000001a]">
 										<Eye size={16} />
 										View
-									</button>
+									</button> */}
 									{row.verificationId && row?.type === "NGO" && (
 										<button
 											onClick={() => {

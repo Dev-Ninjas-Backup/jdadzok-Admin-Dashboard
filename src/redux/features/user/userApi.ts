@@ -51,6 +51,16 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Users"],
     }),
+
+     updateCaplevel: builder.mutation({
+      query: ({ userId, targetLevel, bypassVerification }) => ({
+        url: `/settings-admin/updateCaplevel/${userId}`,
+        method: "PATCH",
+        body: { targetLevel, bypassVerification },
+      }),
+      // Optional: Automatically refetch data or update tags after mutation
+      // invalidatesTags: ['Users'],
+    }),
   }),
 });
 
@@ -59,4 +69,5 @@ export const {
   useSuspendUserMutation,
   useActiveUserMutation,
   useGetAllUserQuery,
+  useUpdateCaplevelMutation  
 } = userApi;
