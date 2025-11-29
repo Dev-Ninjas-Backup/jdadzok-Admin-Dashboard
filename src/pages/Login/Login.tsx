@@ -54,7 +54,7 @@ const Login: React.FC = () => {
 			alert("Login failed");
 		}finally {
             setIsLoading(false)
-        
+        }
 	};
 
 	return (
