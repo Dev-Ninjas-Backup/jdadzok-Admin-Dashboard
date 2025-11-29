@@ -41,3 +41,5 @@ jobs:
           key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
           source: "dist/*"
           target: "~/jdadzok_server/public"
+          script: |
+            docker restart httpserver
