@@ -1,6 +1,7 @@
 import CardWithoutIcon from "@/components/common/CardWithoutIcon";
 import SearchBar from "@/components/common/SearchBar";
 import PayoutManagementTable from "@/components/PayoutManagement/PayoutManagementTable";
+// import { useGetPayoutOverviewQuery } from "@/redux/features/payout/payoutApi";
 import { Clock, DollarSign } from "lucide-react";
 import { useState } from "react";
 
@@ -15,40 +16,6 @@ interface Transaction {
 	accountInfo: string; // Last 4 digits or email
 	totalEarned: string;
 }
-
-const stats = [
-	{
-		title: "Pending Payouts",
-		value: "$1430",
-		leftIconColor: "#F54900",
-		leftIcon: <Clock size={32} />,
-		subtitle: "2 requests",
-		subtitleColor: "#F54900",
-	},
-	{
-		title: "Processing",
-		value: "1",
-
-		leftIconColor: "#155DFC", // Orange color
-		leftIcon: <DollarSign size={32} />,
-		subtitle: "In progress",
-		subtitleColor: "#4A5565",
-	},
-	{
-		title: "Completed This Month",
-		value: "$980.46",
-		subtitle: "1 payouts",
-		subtitleColor: "#00A63E",
-		leftIconColor: "#00A63E", // Blue color
-		leftIcon: <DollarSign size={32} />,
-	},
-	{
-		title: "Total This Month",
-		value: "$104.35",
-		leftIconColor: "#9810FA", // Green color
-		leftIcon: <DollarSign size={32} />,
-	},
-];
 
 const sampleTransactions: Transaction[] = [
 	{
@@ -77,6 +44,7 @@ const sampleTransactions: Transaction[] = [
 
 export default function PayoutManagement() {
 	const [searchValue, setSearchValue] = useState("");
+	// const { data: overView } = useGetPayoutOverviewQuery(undefined);
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value);
@@ -89,6 +57,41 @@ export default function PayoutManagement() {
 		{ id: "completed", label: "Completed", count: 2 },
 		{ id: "all", label: "All Requests", count: null },
 	];
+
+	const stats = [
+		{
+			title: "Pending Payouts",
+			value: "$1430",
+			leftIconColor: "#F54900",
+			leftIcon: <Clock size={32} />,
+			subtitle: "2 requests",
+			subtitleColor: "#F54900",
+		},
+		{
+			title: "Processing",
+			value: "1",
+
+			leftIconColor: "#155DFC", // Orange color
+			leftIcon: <DollarSign size={32} />,
+			subtitle: "In progress",
+			subtitleColor: "#4A5565",
+		},
+		{
+			title: "Completed This Month",
+			value: "$980.46",
+			subtitle: "1 payouts",
+			subtitleColor: "#00A63E",
+			leftIconColor: "#00A63E", // Blue color
+			leftIcon: <DollarSign size={32} />,
+		},
+		{
+			title: "Total This Month",
+			value: "$104.35",
+			leftIconColor: "#9810FA", // Green color
+			leftIcon: <DollarSign size={32} />,
+		},
+	];
+
 	return (
 		<div className="space-y-6">
 			<div className="mb-10 flex items-center justify-between overflow-auto ">

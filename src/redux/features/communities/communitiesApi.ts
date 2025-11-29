@@ -27,8 +27,20 @@ export const communitiesApi = baseApi.injectEndpoints({
 			},
 			providesTags: ["Community"],
 		}),
+
+		reviewCommunities: builder.mutation({
+			query: ({ id, data }) => ({
+				url: `/community-ngo/${id}/review`,
+				method: "PATCH",
+				body: data,
+			}),
+			invalidatesTags: ["Community"],
+		}),
 	}),
 });
 
-export const { useGetAllCommunitiesOverviewQuery, useGetAllCommunitiesQuery } =
-	communitiesApi;
+export const {
+	useGetAllCommunitiesOverviewQuery,
+	useGetAllCommunitiesQuery,
+	useReviewCommunitiesMutation,
+} = communitiesApi;

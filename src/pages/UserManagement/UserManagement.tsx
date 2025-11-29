@@ -32,13 +32,13 @@ export default function UserManagement() {
 		},
 		{
 			title: "Active Users",
-			value: `${data?.totalUsers}`,
-			subtitle: `${data?.totalUsersGrowth}% of total`,
+			value: `${data?.activeUsers}`,
+			subtitle: `${data?.activeUserPercent}% of total`,
 		},
 		{
 			title: "New This Week",
 			value: `${data?.newThisWeek}`,
-			subtitle: `${data?.totalUsersGrowth}% vs last week`,
+			subtitle: `${data?.newWeekPercent}% vs last week`,
 			subtitleColor: "#00A63E",
 		},
 		{
@@ -60,9 +60,9 @@ export default function UserManagement() {
 						Manage and monitor all platform users
 					</p>
 				</div>
-				<button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
+				{/* <button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
 					Export Users
-				</button>
+				</button> */}
 			</div>
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 				{stats.map((stat, index) => (

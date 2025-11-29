@@ -97,9 +97,7 @@ export default function Sidebar() {
 						className="w-11 h-11 rounded-full object-cover"
 					/>
 					<div>
-						<h3 className="text-[#1F2024] text-xl font-semibold">
-							SpectraSynq
-						</h3>
+						<h3 className="text-[#1F2024] text-xl font-semibold">SynqUlan</h3>
 					</div>
 				</div>
 
@@ -142,7 +140,7 @@ export default function Sidebar() {
 					</div>
 					<button
 						onClick={handleLogout}
-						className="cursor-pointer bg-red-500 text-white px-3 py-1 rounded"
+						className="cursor-pointer  border bg-white  px-3 py-1.5 rounded-lg hover:bg-red-500 hover:border-red-500 hover:text-white text-red-500"
 					>
 						Logout
 					</button>

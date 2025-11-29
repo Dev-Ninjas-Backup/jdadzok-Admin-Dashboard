@@ -14,7 +14,16 @@ interface FilterBarProps {
 
 const FilterBar: React.FC<FilterBarProps> = ({
 	searchPlaceholder = "Search by name or email...",
-	statusOptions = ["All Status", "Active", "Inactive", "Pending"],
+	statusOptions = [
+		"All Status",
+		"Paid",
+		"Delivered",
+		"Shipped",
+		"Refunded",
+		"Cancelled",
+		"Pending",
+	],
+
 	onSearchChange,
 	onStatusChange,
 	onMoreFiltersClick,
@@ -53,7 +62,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 						className="appearance-none w-full pl-4 pr-10 py-2.5 bg-[#F3F3F5] border-0 rounded-lg text-sm text-gray-700 cursor-pointer focus:outline-none sm:min-w-[140px]"
 					>
 						{statusOptions.map((option) => (
-							<option key={option} value={option}>
+							<option key={option} value={option.toLocaleUpperCase()}>
 								{option}
 							</option>
 						))}
