@@ -72,7 +72,7 @@ export default function Notifications() {
 					title,
 					message,
 				}).unwrap();
-				console.log("Sending notification");
+				
 			}
 		} catch (err) {
 			console.log("Sending notification failed", err);

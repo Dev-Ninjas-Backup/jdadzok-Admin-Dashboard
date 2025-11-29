@@ -18,7 +18,6 @@ export default function OrdersTransactions() {
 	const { transaction, page, setPage, totalPages } = useTransaction(filters);
 	const handlePrev = () => setPage(Math.max(1, page - 1));
 	const handleNext = () => setPage(Math.min(totalPages, page + 1));
-	console.log(transaction);
 	const stats = [
 		{
 			title: "Total Orders",
