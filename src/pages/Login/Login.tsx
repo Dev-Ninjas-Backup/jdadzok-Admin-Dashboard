@@ -37,6 +37,7 @@ const Login: React.FC = () => {
 		e.preventDefault();
 
 		try {
+            setIsLoading(true)
 			const res: any = await login({
 				email: formData.email,
 				password: formData.password,
@@ -51,7 +52,9 @@ const Login: React.FC = () => {
 		} catch (err) {
 			console.error(err);
 			alert("Login failed");
-		}
+		}finally {
+            setIsLoading(false)
+        }
 	};
 
 	return (
