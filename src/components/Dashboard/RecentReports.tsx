@@ -7,7 +7,6 @@ const RecentReports: React.FC = () => {
   const { data } = useGetMyReportsQuery(page);
 
   const meta = data?.data?.meta;
-  console.log(meta)
 
   return (
     <div className="mx-auto p-3 lg:p-6 bg-white rounded-xl shadow-lg">
