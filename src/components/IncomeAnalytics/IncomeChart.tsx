@@ -22,7 +22,7 @@ const COLORS = ["#3b82f6", "#10b981", "#a855f7", "#f59e0b"];
 export function IncomeCharts() {
 	const { data: revenue } = useGetRevenueGrowthQuery(undefined);
 	const { data } = useGetRevenueCategoryQuery(undefined);
-	// console.log(data.marketplaceTotalRevenue);
+
 
 	const categoryData = [
 		{

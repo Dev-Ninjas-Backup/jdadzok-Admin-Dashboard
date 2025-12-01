@@ -37,7 +37,7 @@ interface Order {
 }
 
 const OrderTable: React.FC<{ data: Order[] }> = ({ data }) => {
-	console.log(data);
+	
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">
