@@ -70,7 +70,7 @@ const Login: React.FC = () => {
 							/>
 						</div>
 						<div>
-							<h3 className="text-[#1F2024] text-2xl font-bold">SpectraSynq</h3>
+							<h3 className="text-[#1F2024] text-2xl font-bold">Synqulan</h3>
 						</div>
 
 						<p className="text-slate-500 text-sm mt-1">
