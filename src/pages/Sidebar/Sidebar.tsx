@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { logout } from "@/redux/slices/authSlice";
 import {
 	Bell,
 	Building2,
 	Calendar,
+	ChartColumnStacked,
 	LayoutGrid,
 	Menu,
 	Settings,
@@ -27,32 +29,37 @@ export default function Sidebar() {
 	const dispatch = useDispatch();
 
 	const menuItems = [
-		{ icon: LayoutGrid, label: "Dashboard", href: "/dashboard" },
-		{ icon: Users, label: "User Management", href: "/users" },
-		{ icon: Building2, label: "Communities & NGOs", href: "/communities-ngo" },
+    { icon: LayoutGrid, label: "Dashboard", href: "/dashboard" },
+    { icon: Users, label: "User Management", href: "/users" },
+    { icon: Building2, label: "Communities & NGOs", href: "/communities-ngo" },
 
-		{ icon: Calendar, label: "Event Management", href: "/event-management" },
+    { icon: Calendar, label: "Event Management", href: "/event-management" },
 
-		{
-			icon: ShoppingBag,
-			label: "Marketplace",
-			href: "/market-place",
-		},
-		{
-			icon: ShoppingCart,
-			label: "Orders & Transactions",
-			href: "/orders-transactions",
-		},
-		{
-			icon: TrendingUp,
-			label: "Income & Analytics",
-			href: "/income-analytics",
-		},
+    {
+      icon: ShoppingBag,
+      label: "Marketplace",
+      href: "/market-place",
+    },
+    {
+      icon: ChartColumnStacked,
+      label: "Product Category",
+      href: "/product-category",
+    },
+    {
+      icon: ShoppingCart,
+      label: "Orders & Transactions",
+      href: "/orders-transactions",
+    },
+    {
+      icon: TrendingUp,
+      label: "Income & Analytics",
+      href: "/income-analytics",
+    },
 
-		{ icon: Wallet, label: "Payout Management", href: "/payout-management" },
-		{ icon: Bell, label: "Notifications", href: "/notifications" },
-		{ icon: Settings, label: "System Settings", href: "/settings" },
-	];
+    { icon: Wallet, label: "Payout Management", href: "/payout-management" },
+    { icon: Bell, label: "Notifications", href: "/notifications" },
+    { icon: Settings, label: "System Settings", href: "/settings" },
+  ];
 
 	const handleNavigate = (href: string) => {
 		navigate(href);
