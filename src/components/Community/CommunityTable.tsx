@@ -1,18 +1,37 @@
-import React from "react";
-import { Eye, CheckCircle, Clock } from "lucide-react";
+import React, { useState } from "react";
+import { CheckCircle, Clock } from "lucide-react";
+import Review from "./Review";
+import CustomPopup from "../common/CustomPopup";
 
 interface Community {
 	initials: string;
-	name: string;
+	title: string;
 	type: string;
-	leader: string;
-	members: number;
+	ownerName: string;
+	followersCount: number;
 	level: number;
-	events: number;
+	projectsCount: number;
+	id: string;
+	verificationId: string;
 	status: "verified" | "pending";
 }
 
 const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
+	const getInitials = (name?: string) => {
+		if (!name) return "?";
+
+		const initials = name
+			.split(" ")
+			.map((word) => word[0])
+			.join("")
+			.toUpperCase();
+
+		return initials.slice(0, 3); // limit to 3 chars
+	};
+
+	const [simplePopup, setSimplePopup] = useState(false);
+	const [selectedId, setSelectedId] = useState<string>();
+
 	return (
 		<div className="w-full overflow-x-auto">
 			<table className="w-full">
@@ -30,9 +49,9 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Members
 						</th>
-						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
+						{/* <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Level
-						</th>
+						</th> */}
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Events
 						</th>
@@ -54,46 +73,46 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-3">
 									<div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700">
-										{row.initials}
+										{getInitials(row?.title)}
 									</div>
-									<div className="text-sm font-normal text-[#101828]">
-										{row.name}
+									<div className="text-sm font-normal text-[#101828] whitespace-nowrap">
+										{row.title}
 									</div>
 								</div>
 							</td>
 
 							{/* Type */}
 							<td className="px-6 py-4">
-								<span className="text-sm text-[#0A0A0A] font-normal border border-[#0000001a] rounded-xl overflow-hidden px-2 py-1">
+								<span className="text-sm text-[#0A0A0A] font-normal border border-[#0000001a] rounded-xl overflow-hidden px-2 py-1 whitespace-nowrap">
 									{row.type}
 								</span>
 							</td>
 
 							{/* Leader */}
 							<td className="px-6 py-4">
-								<span className="text-sm text-[#364153] font-normal">
-									{row.leader}
+								<span className="text-sm text-[#364153] font-normal whitespace-nowrap">
+									{row.ownerName}
 								</span>
 							</td>
 
 							{/* Members */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row.members.toLocaleString()}
+									{row.followersCount}
 								</span>
 							</td>
 
 							{/* Level */}
-							<td className="px-6 py-4">
+							{/* <td className="px-6 py-4">
 								<div className="w-8 h-8 rounded-full bg-[#F3E8FF] flex items-center justify-center text-sm font-medium text-[#8200DB]">
 									{row.level}
 								</div>
-							</td>
+							</td> */}
 
 							{/* Events */}
 							<td className="px-6 py-4">
 								<span className="text-sm text-[#364153] font-normal">
-									{row.events}
+									{row.projectsCount}
 								</span>
 							</td>
 
@@ -123,12 +142,18 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 							{/* Actions */}
 							<td className="px-6 py-4">
 								<div className="flex items-center gap-2">
-									<button className="cursor-pointer flex items-center gap-1.5 text-sm bg-[#FFFFFF] text-[#0A0A0A] hover:text-gray-900 transition-colors px-3 py-1.5 rounded-xl border border-[#0000001a]">
+									{/* <button className="cursor-pointer flex items-center gap-1.5 text-sm bg-[#FFFFFF] text-[#0A0A0A] hover:text-gray-900 transition-colors px-3 py-1.5 rounded-xl border border-[#0000001a]">
 										<Eye size={16} />
 										View
-									</button>
-									{row.status === "pending" && (
-										<button className="cursor-pointer px-3 py-1.5 bg-[#030213] text-white text-sm rounded-xl hover:bg-gray-800 transition-colors">
+									</button> */}
+									{row.verificationId && row?.type === "NGO" && (
+										<button
+											onClick={() => {
+												setSelectedId(row?.verificationId);
+												setSimplePopup(true);
+											}}
+											className="cursor-pointer px-3 py-1.5 bg-[#030213] text-white text-sm rounded-xl hover:bg-gray-800 transition-colors"
+										>
 											Review
 										</button>
 									)}
@@ -138,6 +163,14 @@ const CommunityTable: React.FC<{ data: Community[] }> = ({ data }) => {
 					))}
 				</tbody>
 			</table>
+			<CustomPopup
+				isOpen={simplePopup}
+				onClose={() => setSimplePopup(false)}
+				title="Community & NGO Management"
+				size="md"
+			>
+				<Review id={selectedId} setSimplePopup={setSimplePopup} />
+			</CustomPopup>
 		</div>
 	);
 };

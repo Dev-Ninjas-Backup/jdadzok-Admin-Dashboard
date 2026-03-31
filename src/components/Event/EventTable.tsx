@@ -2,13 +2,13 @@ import React from "react";
 import { CheckCircle, Clock, Calendar, MapPin, Users, X } from "lucide-react";
 
 interface Event {
-	name: string;
+	title: string;
 	category: string;
 	community: string;
 	date: string;
 	location: string;
 	participants: string;
-	status: "upcoming" | "ongoing" | "completed" | "pending";
+	status: string;
 }
 
 const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
@@ -47,35 +47,32 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 							className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
 						>
 							{/* Event */}
-							<td className="px-6 py-4">
+							<td className="px-6 py-4 whitespace-nowrap">
 								<div className="flex flex-col gap-1">
 									<div className="text-sm font-medium text-[#101828]">
-										{row.name}
-									</div>
-									<div className="text-xs text-[#0A0A0A]  border border-[#0000001a] rounded-lg px-2 py-1 w-fit">
-										{row.category}
+										{row?.title}
 									</div>
 								</div>
 							</td>
 
 							{/* Community */}
-							<td className="px-6 py-4">
+							<td className="px-6 py-4 whitespace-nowrap">
 								<span className="text-sm text-[#364153]">{row.community}</span>
 							</td>
 
 							{/* Date */}
 							<td className="px-6 py-4">
-								<div className="flex items-start gap-2 text-sm text-[#364153]">
-									<Calendar size={16} className="text-[#99A1AF]" />
-									{row.date}
+								<div className="flex items-start gap-2 text-sm text-[#364153] whitespace-nowrap">
+									<Calendar size={16} className="text-[#99A1AF] " />
+									{row?.date?.slice(0, 10)}
 								</div>
 							</td>
 
 							{/* Location */}
 							<td className="px-6 py-4">
-								<div className="flex items-start gap-2 text-sm text-[#364153]">
-									<MapPin size={16} className="text-[#99A1AF]" />
-									{row.location}
+								<div className="flex items-start gap-2 text-sm text-[#364153] whitespace-nowrap">
+									<MapPin size={16} className="text-[#99A1AF] " />
+									{row?.location}
 								</div>
 							</td>
 
@@ -83,7 +80,7 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<div className="flex items-start gap-2 text-sm text-[#364153]">
 									<Users size={16} className="text-[#667085]" />
-									{row.participants}
+									{row?.participants}
 								</div>
 							</td>
 
@@ -91,19 +88,19 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 							<td className="px-6 py-4">
 								<span
 									className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium ${
-										row.status === "upcoming"
+										row?.status === "Upcoming"
 											? "bg-[#DBEAFE] text-[#1447E6]"
-											: row.status === "ongoing"
+											: row?.status === "Ongoing"
 											? "bg-[#DCFCE7] text-[#008236]"
-											: row.status === "completed"
+											: row?.status === "Completed"
 											? "bg-[#ECEEF2] text-[#030213]"
 											: "bg-[#FFEDD4] text-[#CA3500]"
 									}`}
 								>
-									{row.status === "upcoming" && "Upcoming"}
-									{row.status === "ongoing" && "Ongoing"}
-									{row.status === "completed" && "Completed"}
-									{row.status === "pending" && (
+									{row?.status === "Upcoming" && "Upcoming"}
+									{row?.status === "Ongoing" && "Ongoing"}
+									{row?.status === "Completed" && "Completed"}
+									{row?.status === "Pending" && (
 										<>
 											<Clock size={14} />
 											Pending
@@ -118,7 +115,7 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 									<button className="text-sm text-[#0A0A0A] items-center justify-center hover:text-[#1D2939] transition-colors border border-[#0000001a]  px-3 py-2  rounded-lg cursor-pointer">
 										View
 									</button>
-									{row.status === "pending" && (
+									{row?.status === "pending" && (
 										<>
 											<button className=" flex items-center justify-center text-[#027A48] hover:bg-[#F6FEF9] rounded-lg transition-colors px-3 py-2 cursor-pointer border border-[#0000001a]">
 												<CheckCircle size={18} />
