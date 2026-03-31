@@ -12,37 +12,39 @@ import Notifications from "@/pages/Notifications/Notifications";
 import SystemSettings from "@/pages/SystemSettings/SystemSettings";
 import Login from "@/pages/Login/Login";
 import ProtectedRoute from "@/routes/ProtectedRoute";
+import ProductCategory from "@/pages/ProductCategory/ProductCategory";
 
 const routes = createBrowserRouter([
-	{
-		path: "/login",
-		element: (
-			<ProtectedRoute authRequired={false}>
-				<Login />
-			</ProtectedRoute>
-		),
-	},
-	{
-		path: "/",
-		element: (
-			<ProtectedRoute authRequired={true}>
-				<DashboardLayout />
-			</ProtectedRoute>
-		),
-		children: [
-			{ index: true, element: <Dashboard /> },
-			{ path: "dashboard", element: <Dashboard /> },
-			{ path: "users", element: <UserManagement /> },
-			{ path: "communities-ngo", element: <CommunitiesNGOs /> },
-			{ path: "event-management", element: <EventManagement /> },
-			{ path: "market-place", element: <Marketplace /> },
-			{ path: "orders-transactions", element: <OrdersTransactions /> },
-			{ path: "income-analytics", element: <IncomeAnalytics /> },
-			{ path: "payout-management", element: <PayoutManagement /> },
-			{ path: "notifications", element: <Notifications /> },
-			{ path: "settings", element: <SystemSettings /> },
-		],
-	},
+  {
+    path: "/login",
+    element: (
+      <ProtectedRoute authRequired={false}>
+        <Login />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute authRequired={true}>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "users", element: <UserManagement /> },
+      { path: "communities-ngo", element: <CommunitiesNGOs /> },
+      { path: "event-management", element: <EventManagement /> },
+      { path: "market-place", element: <Marketplace /> },
+      { path: "product-category", element: <ProductCategory /> },
+      { path: "orders-transactions", element: <OrdersTransactions /> },
+      { path: "income-analytics", element: <IncomeAnalytics /> },
+      { path: "payout-management", element: <PayoutManagement /> },
+      { path: "notifications", element: <Notifications /> },
+      { path: "settings", element: <SystemSettings /> },
+    ],
+  },
 ]);
 
 export default routes;
