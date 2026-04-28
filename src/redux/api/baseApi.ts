@@ -6,7 +6,7 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: process.env.REACT_APP_API_URL || "http://13.204.75.28:5056/",
     // baseUrl: "http://13.204.75.28:5056/",
-    baseUrl: "http://212.85.26.187:5056/",
+    baseUrl: import.meta.env.VITE_API_URL || "http://212.85.26.187:5056/",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token"); // token persisted on login
       if (token) headers.set("Authorization", `Bearer ${token}`);
