@@ -42,14 +42,18 @@ const Login: React.FC = () => {
 				email: formData.email,
 				password: formData.password,
 			}).unwrap();
+			if (!res.success) {
+				toast.error(res.message || "Login failed");
+				return;
+			}
 			dispatch(
 				setCredentials({
 					token: res.data.accessToken,
 					user: res.data.user,
 				})
 			);
+			toast.success(res.response.message || "Login successfully");
 			navigate("/dashboard");
-			toast.success("Login successfully");
 		} catch (err) {
 			console.error(err);
 			toast.error("Login failed");
