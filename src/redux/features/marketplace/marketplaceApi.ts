@@ -2,7 +2,6 @@ import baseApi from "../../api/baseApi";
 
 export const marketplaceApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		//get All Users
 		getAllMarketplaceOverview: builder.query({
 			query: () => ({
 				url: "/marketplace/stats",
@@ -12,15 +11,20 @@ export const marketplaceApi = baseApi.injectEndpoints({
 		}),
 
 		getAllMarketplace: builder.query({
-			query: ({ search, featured, status, page = 1, limit = 10 }) => {
+			query: (args: {
+				search?: string;
+				featured?: string;
+				status?: string;
+				page?: number;
+				limit?: number;
+			} = {}) => {
+				const { search, featured, status, page = 1, limit = 10 } = args;
 				const params = new URLSearchParams();
-
 				if (search) params.append("search", search);
 				if (featured) params.append("featured", featured);
 				if (status) params.append("status", status);
 				params.append("page", page.toString());
 				params.append("limit", limit.toString());
-
 				return {
 					url: `/marketplace/products?${params.toString()}`,
 					method: "GET",
@@ -28,15 +32,6 @@ export const marketplaceApi = baseApi.injectEndpoints({
 			},
 			providesTags: ["Marketplace"],
 		}),
-
-		// reviewCommunities: builder.mutation({
-		// 	query: ({ id, data }) => ({
-		// 		url: `/community-ngo/${id}/review`,
-		// 		method: "PATCH",
-		// 		body: data,
-		// 	}),
-		// 	invalidatesTags: ["Community"],
-		// }),
 	}),
 });
 

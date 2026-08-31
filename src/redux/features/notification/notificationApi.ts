@@ -11,7 +11,7 @@ export const notificationApi = baseApi.injectEndpoints({
 			invalidatesTags: ["Notification"],
 		}),
 		scheduleNotification: builder.mutation({
-			query: (data) => ({
+			query: (data: { title: string; message: string; scheduleTime: string }) => ({
 				url: `/notification-admin/schedule-custom-notification`,
 				method: "POST",
 				body: data,
@@ -34,12 +34,21 @@ export const notificationApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["Notification"],
 		}),
+
+		getAllNotifications: builder.query({
+			query: () => ({
+				url: "/notifications/all",
+				method: "GET",
+			}),
+			providesTags: ["Notification"],
+		}),
 	}),
 });
 
 export const {
 	useGetNotificationOverviewQuery,
 	useLatestNotificationQuery,
+	useGetAllNotificationsQuery,
 	useScheduleNotificationMutation,
 	useNotificationMutation,
 } = notificationApi;

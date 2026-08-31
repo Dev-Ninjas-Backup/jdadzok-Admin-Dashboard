@@ -34,6 +34,15 @@ const productCategoryApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["ProductCategory"],
         }),
+
+        updateProductCategory: builder.mutation({
+            query: ({ id, ...body }) => ({
+                url: `/product-category/${id}`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: ["ProductCategory"],
+        }),
     }),
 });
 
@@ -42,4 +51,5 @@ export const {
     useCreateProductCategoryMutation,
     useGetSingleProductCategoryQuery,
     useDeleteProductCategoryMutation,
+    useUpdateProductCategoryMutation,
 } = productCategoryApi;

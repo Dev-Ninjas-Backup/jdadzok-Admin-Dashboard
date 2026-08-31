@@ -92,7 +92,6 @@ export default function OrdersTransactions() {
 					searchPlaceholder="Search by order ID or customer..."
 					onSearchChange={(value) => setSearch(value)}
 					onStatusChange={(value) => setStatus(value)}
-					onMoreFiltersClick={() => console.log("More filters clicked")}
 				/>
 			</div>
 

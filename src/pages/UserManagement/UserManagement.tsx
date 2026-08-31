@@ -82,7 +82,6 @@ export default function UserManagement() {
 					onSearchChange={(value) => setSearch(value)}
 					onStatusChange={(value) => setStatus(value)}
 					onRoleChange={(value) => setRole(value)}
-					onMoreFiltersClick={() => console.log("More filters clicked")}
 				/>
 			</div>
 

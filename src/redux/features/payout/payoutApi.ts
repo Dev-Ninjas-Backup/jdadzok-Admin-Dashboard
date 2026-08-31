@@ -9,7 +9,19 @@ export const payoutApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["Payout"],
 		}),
+    getPaidOrders: builder.query({
+      query: (args: { sellerName?: string } = {}) => {
+        const { sellerName } = args;
+        const searchParams = new URLSearchParams();
+        if (sellerName) searchParams.append("sellerName", sellerName);
+        return {
+          url: `/admin/payoutManagement/stats?${searchParams.toString()}`,
+          method: "GET",
+        };
+      },
+			providesTags: ["Payout"],
+		}),
 	}),
 });
 
-export const { useGetPayoutOverviewQuery } = payoutApi;
+export const { useGetPayoutOverviewQuery, useGetPaidOrdersQuery } = payoutApi;
