@@ -54,10 +54,10 @@ export default function EventManagement() {
 			<div className="mb-10 flex items-center justify-between overflow-auto ">
 				<div className="space-y-1">
 					<h1 className="text-xl sm:text-2xl  text-[#101828]">
-						Event Management
+						Volunteer Projects
 					</h1>
 					<p className="text-[#4A5565] text-sm sm:text-base">
-						Monitor and manage all community events
+						Monitor volunteer projects across NGOs (read-only)
 					</p>
 				</div>
 				{/* <button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">

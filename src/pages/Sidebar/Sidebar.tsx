@@ -1,13 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { logout } from "@/redux/slices/authSlice";
 import {
+	Award,
 	Bell,
 	Building2,
 	Calendar,
 	ChartColumnStacked,
+	HandHeart,
+	FileText,
+	Flag,
+	BarChart3,
+	Activity,
 	LayoutGrid,
+	Landmark,
 	Menu,
 	Settings,
+	ShieldAlert,
 	ShoppingBag,
 	ShoppingCart,
 	TrendingUp,
@@ -31,9 +39,14 @@ export default function Sidebar() {
 	const menuItems = [
     { icon: LayoutGrid, label: "Dashboard", href: "/dashboard" },
     { icon: Users, label: "User Management", href: "/users" },
+    { icon: Award, label: "Cap Level & Sky Blue", href: "/cap-level" },
+    { icon: ShieldAlert, label: "Fraud Review", href: "/fraud-review" },
+    { icon: Landmark, label: "Corporate CSR", href: "/corporate" },
+    { icon: HandHeart, label: "Volunteer Hours", href: "/volunteer-hours" },
+    { icon: Flag, label: "Reports", href: "/reports" },
     { icon: Building2, label: "Communities & NGOs", href: "/communities-ngo" },
 
-    { icon: Calendar, label: "Event Management", href: "/event-management" },
+    { icon: Calendar, label: "Volunteer Projects", href: "/event-management" },
 
     {
       icon: ShoppingBag,
@@ -55,9 +68,12 @@ export default function Sidebar() {
       label: "Income & Analytics",
       href: "/income-analytics",
     },
+    { icon: BarChart3, label: "Impact Reports", href: "/impact-reports" },
+    { icon: Activity, label: "Platform Analytics", href: "/analytics" },
 
     { icon: Wallet, label: "Payout Management", href: "/payout-management" },
     { icon: Bell, label: "Notifications", href: "/notifications" },
+    { icon: FileText, label: "Content", href: "/content" },
     { icon: Settings, label: "System Settings", href: "/settings" },
   ];
 

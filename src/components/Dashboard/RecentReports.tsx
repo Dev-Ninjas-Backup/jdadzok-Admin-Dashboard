@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { useGetMyReportsQuery } from "@/redux/features/reports/reportsApi";
+import {
+  useGetAdminReportsQuery,
+  type AdminReport,
+} from "@/redux/features/reports/reportsApi";
 import ReportItem from "./ReportItem";
 
 const RecentReports: React.FC = () => {
   const [page, setPage] = useState(1);
-  const { data } = useGetMyReportsQuery(page);
+  const { data } = useGetAdminReportsQuery({ page, limit: 5 });
 
-  const meta = data?.data?.meta;
+  const meta = data?.meta;
+  const reports = Array.isArray(data?.data) ? data.data : [];
 
   return (
     <div className="mx-auto p-3 lg:p-6 bg-white rounded-xl shadow-lg">
@@ -15,25 +19,28 @@ const RecentReports: React.FC = () => {
       </div>
 
       <div className="divide-y divide-gray-100">
-        {data?.data?.data?.map((report: any) => (
-          <ReportItem
-            key={report.id}
-            id={report.id}
-            reason={report.reason}
-            createdAt={report.createdAt}
-            reporter={report.reporter}
-            status={report.status}
-          />
-        ))}
+        {reports.length === 0 ? (
+          <p className="py-4 text-sm text-gray-500">No reports yet.</p>
+        ) : (
+          reports.map((report: AdminReport) => (
+            <ReportItem
+              key={report.id}
+              id={report.id}
+              reason={report.reason}
+              createdAt={report.createdAt}
+              reporter={report.reporter}
+              status={report.status}
+            />
+          ))
+        )}
       </div>
 
-      {/* Pagination */}
-      {meta && (
+      {meta && meta.totalPages > 1 && (
         <div className="flex items-center justify-end gap-4 mt-5">
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            className={`px-4 py-2 rounded text-sm font-medium ${
+            className={`px-4 py-2 rounded text-sm font-medium cursor-pointer ${
               page === 1
                 ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                 : "bg-gray-100 hover:bg-gray-200"
@@ -41,15 +48,15 @@ const RecentReports: React.FC = () => {
           >
             Prev
           </button>
-
           <span className="text-sm font-medium text-gray-700">
             Page {meta.page} of {meta.totalPages}
           </span>
-
           <button
-            onClick={() => setPage((prev) => Math.min(prev + 1, meta.totalPages))}
+            onClick={() =>
+              setPage((prev) => Math.min(prev + 1, meta.totalPages))
+            }
             disabled={page === meta.totalPages}
-            className={`px-4 py-2 rounded text-sm font-medium ${
+            className={`px-4 py-2 rounded text-sm font-medium cursor-pointer ${
               page === meta.totalPages
                 ? "bg-gray-200 text-gray-500 cursor-not-allowed"
                 : "bg-gray-100 hover:bg-gray-200"

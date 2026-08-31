@@ -7,7 +7,7 @@ interface Transaction {
   avatar: string; // Letter for avatar (G, O, etc.)
   amount: string;
   date: string;
-  paymentMethod: "Bank Transfer" | "PayPal";
+  paymentMethod: string;
   accountInfo: string; // Last 4 digits or email
   totalEarned: string;
 }

@@ -9,7 +9,6 @@ interface FilterBarProps {
 	onSearchChange?: (value: string) => void;
 	onStatusChange?: (value: string) => void;
 	onRoleChange?: (value: string) => void;
-	onMoreFiltersClick?: () => void;
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({
@@ -19,7 +18,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
 	onSearchChange,
 	onStatusChange,
 	onRoleChange,
-	// onMoreFiltersClick,
 }) => {
 	const [searchValue, setSearchValue] = useState("");
 	const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);

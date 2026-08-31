@@ -5,9 +5,10 @@ import {
   useDeleteProductCategoryMutation,
   useGetProductCategoriesQuery,
   useGetSingleProductCategoryQuery,
+  useUpdateProductCategoryMutation,
 } from "@/redux/features/productCategory/productCategoryApi";
 import SearchBar from "@/components/common/SearchBar";
-import { Package, Trash2, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { Package, Trash2, Eye, ChevronLeft, ChevronRight, Pencil } from "lucide-react";
 import AddCategoryModal from "@/components/ProductCategory/AddCategoryModal";
 import ViewCategoryModal from "@/components/ProductCategory/ViewCategoryModal";
 import DeleteConfirmationModal from "@/components/ProductCategory/DeleteConfirmationModal"; // New Import
@@ -18,6 +19,9 @@ const ProductCategory: React.FC = () => {
   const [createProductCategory] = useCreateProductCategoryMutation();
   const [deleteProductCategory, { isLoading: isDeleting }] =
     useDeleteProductCategoryMutation();
+  const [updateProductCategory] = useUpdateProductCategoryMutation();
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState({ name: "", slug: "", description: "" });
 
   // Local States
   const [searchTerm, setSearchTerm] = useState("");
@@ -100,6 +104,29 @@ const ProductCategory: React.FC = () => {
     setIsViewModalOpen(true);
   };
 
+  const startEdit = (category: { id: string; name: string; slug: string; description?: string }) => {
+    setEditingId(category.id);
+    setEditForm({
+      name: category.name,
+      slug: category.slug,
+      description: category.description || "",
+    });
+  };
+
+  const handleUpdateCategory = async () => {
+    if (!editingId) return;
+    try {
+      await updateProductCategory({ id: editingId, ...editForm }).unwrap();
+      toast.success("Category updated");
+      setEditingId(null);
+    } catch (err: unknown) {
+      const message = err && typeof err === "object" && "data" in err
+        ? (err as { data?: { message?: string } }).data?.message
+        : undefined;
+      toast.error(message || "Failed to update category");
+    }
+  };
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -166,32 +193,90 @@ const ProductCategory: React.FC = () => {
                     className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <Package size={16} className="text-gray-400" />
-                        <span className="font-medium text-gray-900">
-                          {category.name}
-                        </span>
-                      </div>
+                      {editingId === category.id ? (
+                        <input
+                          value={editForm.name}
+                          onChange={(e) =>
+                            setEditForm({ ...editForm, name: e.target.value })
+                          }
+                          className="text-sm border rounded px-2 py-1 w-full"
+                        />
+                      ) : (
+                        <div className="flex items-center gap-3">
+                          <Package size={16} className="text-gray-400" />
+                          <span className="font-medium text-gray-900">
+                            {category.name}
+                          </span>
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
-                      {category.slug}
+                      {editingId === category.id ? (
+                        <input
+                          value={editForm.slug}
+                          onChange={(e) =>
+                            setEditForm({ ...editForm, slug: e.target.value })
+                          }
+                          className="text-sm border rounded px-2 py-1 w-full"
+                        />
+                      ) : (
+                        category.slug
+                      )}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500 truncate max-w-xs">
-                      {category.description || "No description"}
+                      {editingId === category.id ? (
+                        <input
+                          value={editForm.description}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              description: e.target.value,
+                            })
+                          }
+                          className="text-sm border rounded px-2 py-1 w-full"
+                        />
+                      ) : (
+                        category.description || "No description"
+                      )}
                     </td>
                     <td className="px-6 py-4 text-right space-x-2">
-                      <button
-                        onClick={() => handleViewDetails(category.id)}
-                        className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 transition-colors"
-                      >
-                        <Eye size={18} />
-                      </button>
-                      <button
-                        onClick={() => openDeleteModal(category)}
-                        className="p-2 hover:bg-red-50 rounded-lg text-red-600 transition-colors"
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                      {editingId === category.id ? (
+                        <>
+                          <button
+                            onClick={handleUpdateCategory}
+                            className="text-xs px-2 py-1 bg-[#008236] text-white rounded"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="text-xs px-2 py-1 border rounded"
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => startEdit(category)}
+                            className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 transition-colors"
+                          >
+                            <Pencil size={18} />
+                          </button>
+                          <button
+                            onClick={() => handleViewDetails(category.id)}
+                            className="p-2 hover:bg-gray-100 rounded-lg text-gray-600 transition-colors"
+                          >
+                            <Eye size={18} />
+                          </button>
+                          <button
+                            onClick={() => openDeleteModal(category)}
+                            className="p-2 hover:bg-red-50 rounded-lg text-red-600 transition-colors"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))

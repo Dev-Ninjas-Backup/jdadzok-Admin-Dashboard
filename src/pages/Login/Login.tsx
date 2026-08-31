@@ -3,33 +3,36 @@ import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useDispatch } from "react-redux";
-import { useLoginMutation } from "@/redux/api/authApi";
+import {
+	useForgetPasswordMutation,
+	useLoginMutation,
+} from "@/redux/api/authApi";
 import { setCredentials } from "@/redux/slices/authSlice";
 import toast from "react-hot-toast";
 
 interface LoginFormData {
 	email: string;
 	password: string;
-	rememberMe: boolean;
 }
 
 const Login: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [login, { isLoading }] = useLoginMutation();
+	const [forgetPassword, { isLoading: isResetting }] =
+		useForgetPasswordMutation();
 
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [formData, setFormData] = useState<LoginFormData>({
 		email: "",
 		password: "",
-		rememberMe: false,
 	});
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value, type, checked } = e.target;
+		const { name, value } = e.target;
 		setFormData((prev) => ({
 			...prev,
-			[name]: type === "checkbox" ? checked : value,
+			[name]: value,
 		}));
 	};
 
@@ -38,7 +41,6 @@ const Login: React.FC = () => {
 
 		try {
 			const res = await login({
-
 				email: formData.email,
 				password: formData.password,
 			}).unwrap();
@@ -52,30 +54,39 @@ const Login: React.FC = () => {
 					user: res.data.user,
 				})
 			);
-			toast.success(res.response.message || "Login successfully");
+			toast.success(res.response?.message || "Login successful");
 			navigate("/dashboard");
-		} catch (err) {
-			console.error(err);
+		} catch {
+			toast.error("Login failed");
+		}
+	};
+
+	const handleForgotPassword = async () => {
+		if (!formData.email.trim()) {
+			toast.error("Enter your email first");
+			return;
+		}
+		try {
+			await forgetPassword({ email: formData.email.trim() }).unwrap();
+			toast.success("Password reset email sent");
+		} catch {
+			toast.error("Failed to send reset email");
 		}
 	};
 
 	return (
-		<div className="min-h-screen   flex items-center justify-center p-4 relative overflow-hidden">
+		<div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
 			<div className="w-full max-w-md relative z-10">
 				<div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden">
-					{/* Logo/Brand */}
-					<div className="flex flex-col items-center pt-8 pb-6 px-8  bg-white">
-						<div className="w-16 h-16  flex items-center justify-center mb-4 ">
+					<div className="flex flex-col items-center pt-8 pb-6 px-8 bg-white">
+						<div className="w-16 h-16 flex items-center justify-center mb-4">
 							<img
 								src={logo}
-								alt="Concert stage"
+								alt="Synqulan"
 								className="w-11 h-11 rounded-full object-cover"
 							/>
 						</div>
-						<div>
-							<h3 className="text-[#1F2024] text-2xl font-bold">Synqulan</h3>
-						</div>
-
+						<h3 className="text-[#1F2024] text-2xl font-bold">Synqulan</h3>
 						<p className="text-slate-500 text-sm mt-1">
 							Sign in to your admin dashboard
 						</p>
@@ -83,7 +94,6 @@ const Login: React.FC = () => {
 
 					<div className="px-8 py-6">
 						<form onSubmit={handleSubmit} className="space-y-5">
-							{/* Email Input */}
 							<div>
 								<label
 									htmlFor="email"
@@ -99,14 +109,13 @@ const Login: React.FC = () => {
 										name="email"
 										value={formData.email}
 										onChange={handleChange}
-										className="w-full pl-11 pr-4 py-3 border text-slate-800 border-slate-300 rounded-lg   outline-none transition-all"
+										className="w-full pl-11 pr-4 py-3 border text-slate-800 border-slate-300 rounded-lg outline-none transition-all"
 										placeholder="admin@example.com"
 										required
 									/>
 								</div>
 							</div>
 
-							{/* Password Input */}
 							<div>
 								<label
 									htmlFor="password"
@@ -122,7 +131,7 @@ const Login: React.FC = () => {
 										name="password"
 										value={formData.password}
 										onChange={handleChange}
-										className="w-full pl-11 pr-12 py-3 text-slate-800 border border-slate-300 rounded-lg  outline-none transition-all"
+										className="w-full pl-11 pr-12 py-3 text-slate-800 border border-slate-300 rounded-lg outline-none transition-all"
 										placeholder="Enter your password"
 										required
 									/>
@@ -140,29 +149,25 @@ const Login: React.FC = () => {
 								</div>
 							</div>
 
-							{/* Submit Button */}
 							<button
 								type="submit"
 								disabled={isLoading}
-								className="w-full bg-[#1447E6] cursor-pointer text-white py-3 rounded-lg font-medium  hover:bg-[#153fc0] focus:outline-none focus:ring-2  transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30"
+								className="w-full bg-[#1447E6] cursor-pointer text-white py-3 rounded-lg font-medium hover:bg-[#153fc0] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
 							>
 								Sign In
 							</button>
 
-							{/* Remember Me & Forgot Password */}
 							<div className="flex items-center w-full justify-center">
 								<button
 									type="button"
-									className="text-[#1447E6] text-sm cursor-pointer hover:text-[#0e2a7e] font-medium"
+									onClick={handleForgotPassword}
+									disabled={isResetting}
+									className="text-[#1447E6] text-sm cursor-pointer hover:text-[#0e2a7e] font-medium disabled:opacity-50"
 								>
-									Forgot password?
+									{isResetting ? "Sending..." : "Forgot password?"}
 								</button>
 							</div>
 						</form>
-						<div className="pt-4">
-							<p className="text-gray-400"> Email: superadmin@gmail.com</p>
-							<p className="text-gray-400"> Password: superadmin</p>
-						</div>
 					</div>
 				</div>
 			</div>

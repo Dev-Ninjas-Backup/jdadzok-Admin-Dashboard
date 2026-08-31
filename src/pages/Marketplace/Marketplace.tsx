@@ -13,7 +13,8 @@ export default function Marketplace() {
 
 	const filters = {
 		search: search || undefined,
-		...(status !== "all" && { status }),
+		...(status === "featured" && { featured: "true" }),
+		...(status !== "all" && status !== "featured" && { status }),
 	};
 
 	const { market, page, setPage, totalPages } = useMarketplace(filters);
@@ -24,58 +25,46 @@ export default function Marketplace() {
 	const stats = [
 		{
 			title: "Total Products",
-			value: `${data?.totalProducts}`,
-			subtitle: undefined,
+			value: `${data?.totalProducts ?? 0}`,
 			leftIconColor: "#155DFC",
 			leftIcon: <Box size={20} />,
 		},
 		{
 			title: "Active Listings",
-			value: `${data?.activeListings}`,
-			subtitle: "Ready to start" as string | undefined,
-			leftIconColor: "#00A63E", // Blue color
+			value: `${data?.activeListings ?? 0}`,
+			leftIconColor: "#00A63E",
 			leftIcon: <CheckCircle size={20} />,
 		},
 		{
 			title: "Featured Items",
-			value: `${data?.featuredItems}`,
-			subtitle: "In progress" as string | undefined,
-			leftIconColor: "#D08700", // Green color
+			value: `${data?.featuredItems ?? 0}`,
+			leftIconColor: "#D08700",
 			leftIcon: <StarIcon size={20} />,
 		},
 		{
 			title: "Total Sales",
-			value: `${data?.totalSales}`,
-			subtitle: "Awaiting review" as string | undefined,
-			leftIconColor: "#00A63E", // Orange color
+			value: `$${data?.totalSales ?? 0}`,
+			leftIconColor: "#00A63E",
 			leftIcon: <DollarSign size={20} />,
 		},
 	];
-
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearch(e.target.value);
-	};
 
 	const filterOption = [
 		{ id: "all", label: "All Products" },
 		{ id: "CONTINUED", label: "Active" },
 		{ id: "SOLDOUT", label: "Sold Out" },
+		{ id: "featured", label: "Featured" },
 	];
 
 	return (
 		<div className="space-y-6">
-			<div className="mb-10 flex items-center justify-between overflow-auto ">
-				<div className="space-y-1">
-					<h1 className="text-xl sm:text-2xl  text-[#101828]">
-						Marketplace Management
-					</h1>
-					<p className="text-[#4A5565] text-sm sm:text-base">
-						Manage products, sellers, and marketplace activities
-					</p>
-				</div>
-				{/* <button className="cursor-pointer bg-[#030213] hover:bg-[#030213] text-white rounded-lg px-1 sm:px-4 py-2">
-					Add Product
-				</button> */}
+			<div className="mb-10 space-y-1">
+				<h1 className="text-xl sm:text-2xl text-[#101828]">
+					Marketplace
+				</h1>
+				<p className="text-[#4A5565] text-sm sm:text-base">
+					View products and seller listings (read-only)
+				</p>
 			</div>
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 				{stats.map((stat, index) => (
@@ -92,24 +81,21 @@ export default function Marketplace() {
 			</div>
 			<div className="border border-[#0000001a] rounded-xl overflow-hidden bg-white p-4">
 				<SearchBar
-					placeholder="Search events by title or community..."
+					placeholder="Search products or sellers..."
 					value={search}
-					onChange={handleSearchChange}
+					onChange={(e) => setSearch(e.target.value)}
 				/>
 			</div>
-			<div className="flex flex-wrap sm:flex-nowrap rounded-2xl gap-2 bg-[#ECECF0] sm:rounded-full p-1 w-full sm:w-fit">
+			<div className="flex flex-wrap gap-2 bg-[#ECECF0] rounded-full p-1 w-fit">
 				{filterOption.map((filter) => (
 					<button
 						key={filter.id}
 						onClick={() => setStatus(filter.id)}
-						className={`
-				cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all
-				w-[48%] sm:w-auto 
-        ${
-					status === filter.id
-						? "bg-white text-[#0A0A0A] shadow-sm"
-						: "text-gray-600 hover:text-gray-900"
-				}`}
+						className={`cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all ${
+							status === filter.id
+								? "bg-white text-[#0A0A0A] shadow-sm"
+								: "text-gray-600 hover:text-gray-900"
+						}`}
 					>
 						{filter.label}
 					</button>
@@ -123,7 +109,7 @@ export default function Marketplace() {
 					<button
 						onClick={handlePrev}
 						disabled={page === 1}
-						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
 					>
 						Prev
 					</button>
@@ -133,7 +119,7 @@ export default function Marketplace() {
 					<button
 						onClick={handleNext}
 						disabled={page === totalPages}
-						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+						className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 cursor-pointer"
 					>
 						Next
 					</button>

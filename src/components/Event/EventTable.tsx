@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckCircle, Clock, Calendar, MapPin, Users, X } from "lucide-react";
+import { Calendar, MapPin, Users } from "lucide-react";
 
 interface Event {
 	title: string;
@@ -18,10 +18,10 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 				<thead>
 					<tr className="border-b border-gray-200">
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
-							Event
+							Project
 						</th>
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
-							Community
+							NGO
 						</th>
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Date
@@ -35,9 +35,6 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
 							Status
 						</th>
-						<th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
-							Actions
-						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,86 +43,46 @@ const EventTable: React.FC<{ data: Event[] }> = ({ data }) => {
 							key={index}
 							className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
 						>
-							{/* Event */}
 							<td className="px-6 py-4 whitespace-nowrap">
-								<div className="flex flex-col gap-1">
-									<div className="text-sm font-medium text-[#101828]">
-										{row?.title}
-									</div>
+								<div className="text-sm font-medium text-[#101828]">
+									{row?.title}
 								</div>
 							</td>
-
-							{/* Community */}
 							<td className="px-6 py-4 whitespace-nowrap">
 								<span className="text-sm text-[#364153]">{row.community}</span>
 							</td>
-
-							{/* Date */}
 							<td className="px-6 py-4">
 								<div className="flex items-start gap-2 text-sm text-[#364153] whitespace-nowrap">
-									<Calendar size={16} className="text-[#99A1AF] " />
+									<Calendar size={16} className="text-[#99A1AF]" />
 									{row?.date?.slice(0, 10)}
 								</div>
 							</td>
-
-							{/* Location */}
 							<td className="px-6 py-4">
 								<div className="flex items-start gap-2 text-sm text-[#364153] whitespace-nowrap">
-									<MapPin size={16} className="text-[#99A1AF] " />
+									<MapPin size={16} className="text-[#99A1AF]" />
 									{row?.location}
 								</div>
 							</td>
-
-							{/* Participants */}
 							<td className="px-6 py-4">
 								<div className="flex items-start gap-2 text-sm text-[#364153]">
 									<Users size={16} className="text-[#667085]" />
 									{row?.participants}
 								</div>
 							</td>
-
-							{/* Status */}
 							<td className="px-6 py-4">
 								<span
 									className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium ${
 										row?.status === "Upcoming"
 											? "bg-[#DBEAFE] text-[#1447E6]"
 											: row?.status === "Ongoing"
-											? "bg-[#DCFCE7] text-[#008236]"
-											: row?.status === "Completed"
-											? "bg-[#ECEEF2] text-[#030213]"
-											: "bg-[#FFEDD4] text-[#CA3500]"
+												? "bg-[#DCFCE7] text-[#008236]"
+												: row?.status === "Completed"
+													? "bg-[#ECEEF2] text-[#030213]"
+													: "bg-[#FFEDD4] text-[#CA3500]"
 									}`}
 								>
-									{row?.status === "Upcoming" && "Upcoming"}
-									{row?.status === "Ongoing" && "Ongoing"}
-									{row?.status === "Completed" && "Completed"}
-									{row?.status === "Pending" && (
-										<>
-											<Clock size={14} />
-											Pending
-										</>
-									)}
+									{row?.status}
 								</span>
-							</td>
-
-							{/* Actions */}
-							<td className="px-6 py-4">
-								<div className="flex items-center gap-2">
-									<button className="text-sm text-[#0A0A0A] items-center justify-center hover:text-[#1D2939] transition-colors border border-[#0000001a]  px-3 py-2  rounded-lg cursor-pointer">
-										View
-									</button>
-									{row?.status === "pending" && (
-										<>
-											<button className=" flex items-center justify-center text-[#027A48] hover:bg-[#F6FEF9] rounded-lg transition-colors px-3 py-2 cursor-pointer border border-[#0000001a]">
-												<CheckCircle size={18} />
-											</button>
-											<button className=" flex items-center justify-center text-[#D92D20] hover:bg-[#FEF3F2] rounded-lg transition-colors px-3 py-2 cursor-pointer border border-[#0000001a]">
-												<X size={18} />
-											</button>
-										</>
-									)}
-								</div>
 							</td>
 						</tr>
 					))}

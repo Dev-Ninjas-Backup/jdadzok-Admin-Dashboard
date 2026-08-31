@@ -1,5 +1,6 @@
 import { useGetAllPendingApplicationQuery } from '@/redux/features/dashboard/dashboardApi'
 import { AlertCircle } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 interface ApprovalItem {
   id: string
@@ -10,6 +11,7 @@ interface ApprovalItem {
 }
 
 export function PendingApprovals() {
+  const navigate = useNavigate()
   // Fetch the data from the API with proper typing
   const { data: approvals = [], isLoading, error } = useGetAllPendingApplicationQuery(null)
 
@@ -44,7 +46,10 @@ export function PendingApprovals() {
           </span>
         </div>
 
-        <button className="px-3 py-2 sm:px-4 rounded-md border border-gray-300 bg-white hover:bg-gray-100 text-gray-900 text-sm font-medium w-full sm:w-auto">
+        <button
+          onClick={() => navigate('/reports')}
+          className="px-3 py-2 sm:px-4 rounded-md border border-gray-300 bg-white hover:bg-gray-100 text-gray-900 text-sm font-medium w-full sm:w-auto cursor-pointer"
+        >
           View All
         </button>
       </div>

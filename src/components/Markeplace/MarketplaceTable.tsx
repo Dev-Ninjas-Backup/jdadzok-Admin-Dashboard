@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, CheckCircle, X, Star, Package } from "lucide-react";
+import { Eye, Star, Package } from "lucide-react";
 import MarketPlaceModal from "./MarketPlaceModal";
 
 interface Product {
@@ -7,10 +7,10 @@ interface Product {
   isFeatured?: boolean;
   seller: string;
   category: string;
-  price: string;
+  price: string | number;
   stock: number;
   totalSalesAmount: number;
-  rating: number;
+  rating: number | null;
   status: "CONTINUED" | "SOLDOUT" | "pending";
 }
 
@@ -26,37 +26,35 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Product
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Seller
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Category
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Price
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Stock
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Sales
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
-              Rating
-            </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
               Status
             </th>
-            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]   tracking-wider">
-              Actions
+            <th className="text-left px-6 py-4 text-sm font-medium text-[#0A0A0A]">
+              View
             </th>
           </tr>
         </thead>
@@ -66,7 +64,6 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
               key={index}
               className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
             >
-              {/* Product */}
               <td className="px-4 py-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -88,65 +85,43 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
                   </div>
                 </div>
               </td>
-
-              {/* Seller */}
-              <td className="px-4 py-4 ">
+              <td className="px-4 py-4">
                 <span className="text-sm whitespace-nowrap text-[#364153]">
                   {product.seller}
                 </span>
               </td>
-
-              {/* Category */}
               <td className="px-4 py-4">
-                <span className="text-sm text-[#0A0A0A]  border border-[#0000001a] px-2 py-1 rounded-lg whitespace-nowrap">
+                <span className="text-sm text-[#0A0A0A] border border-[#0000001a] px-2 py-1 rounded-lg whitespace-nowrap">
                   {product.category}
                 </span>
               </td>
-
-              {/* Price */}
               <td className="px-4 py-4">
                 <span className="text-sm font-medium text-[#101828]">
                   {product.price}
                 </span>
               </td>
-
-              {/* Stock */}
-              <td className="px-4 py-4 ">
+              <td className="px-4 py-4">
                 <span
-                  className={`text-sm font-medium  ${
+                  className={`text-sm font-medium ${
                     product.stock === 0 ? "text-[#CA3500]" : "text-[#364153]"
                   }`}
                 >
                   {product.stock}
                 </span>
               </td>
-
-              {/* Sales */}
               <td className="px-4 py-4">
                 <span className="text-sm text-[#364153]">
                   {product.totalSalesAmount}
                 </span>
               </td>
-
-              {/* Rating */}
-              <td className="px-4 py-4">
-                <div className="flex items-center gap-1">
-                  <Star size={14} className="text-[#F0B100] fill-[#F0B100]" />
-                  <span className="text-sm font-medium text-[#364153]">
-                    {product.rating <= 0 && 0}
-                  </span>
-                </div>
-              </td>
-
-              {/* Status */}
               <td className="px-4 py-4">
                 <span
                   className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap ${
                     product.status === "CONTINUED"
-                      ? "bg-[#DCFCE7] text-[#008236] "
+                      ? "bg-[#DCFCE7] text-[#008236]"
                       : product.status === "SOLDOUT"
-                      ? "bg-[#FFEDD4] text-[#CA3500] "
-                      : "bg-[#ECEEF2] text-[#030213] "
+                        ? "bg-[#FFEDD4] text-[#CA3500]"
+                        : "bg-[#ECEEF2] text-[#030213]"
                   }`}
                 >
                   {product.status === "CONTINUED" && "Active"}
@@ -154,37 +129,22 @@ const MarketplaceTable: React.FC<{ data: Product[] }> = ({ data }) => {
                   {product.status === "pending" && "Pending"}
                 </span>
               </td>
-
-              {/* Actions */}
               <td className="px-4 py-4">
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => openModal(product)}
-                    className="cursor-pointer hover:bg-gray-100 border border-[#0000001a] px-2 py-1.5 rounded-lg transition-colors"
-                  >
-                    <Eye size={18} className="text-[#0A0A0A]" />
-                  </button>
-                  {product.status === "pending" && (
-                    <>
-                      <button className="cursor-pointer hover:bg-green-50 border  border-[#0000001a] px-2 py-1.5 rounded-lg transition-colors">
-                        <CheckCircle size={18} className="text-green-600" />
-                      </button>
-                      <button className="cursor-pointer hover:bg-red-50 border border-[#0000001a] px-2 py-1.5 rounded-lg transition-colors">
-                        <X size={18} className="text-red-600" />
-                      </button>
-                    </>
-                  )}
-                </div>
+                <button
+                  onClick={() => openModal(product)}
+                  className="cursor-pointer hover:bg-gray-100 border border-[#0000001a] px-2 py-1.5 rounded-lg transition-colors"
+                >
+                  <Eye size={18} className="text-[#0A0A0A]" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {/* Modal Component */}
       <MarketPlaceModal
         isOpen={isModalOpen}
         closeModal={closeModal}
-        product={selectedProduct!} // Ensure selectedProduct is not null
+        product={selectedProduct!}
       />
     </div>
   );
