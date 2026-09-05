@@ -18,6 +18,7 @@ import FraudReview from "@/pages/FraudReview/FraudReview";
 import CorporateCSR from "@/pages/CorporateCSR/CorporateCSR";
 import ContentManagement from "@/pages/ContentManagement/ContentManagement";
 import VolunteerHours from "@/pages/VolunteerHours/VolunteerHours";
+import VolunteerApplication from "@/pages/VolunteerApplication/VolunteerApplication";
 import ReportsModeration from "@/pages/ReportsModeration/ReportsModeration";
 import ImpactReports from "@/pages/ImpactReports/ImpactReports";
 import PlatformAnalytics from "@/pages/PlatformAnalytics/PlatformAnalytics";
@@ -54,6 +55,7 @@ const routes = createBrowserRouter([
       { path: "corporate", element: <CorporateCSR /> },
       { path: "content", element: <ContentManagement /> },
       { path: "volunteer-hours", element: <VolunteerHours /> },
+      { path: "volunteer-applications", element: <VolunteerApplication /> },
       { path: "reports", element: <ReportsModeration /> },
       { path: "impact-reports", element: <ImpactReports /> },
       { path: "analytics", element: <PlatformAnalytics /> },
