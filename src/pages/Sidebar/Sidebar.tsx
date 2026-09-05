@@ -11,6 +11,7 @@ import {
 	Flag,
 	BarChart3,
 	Activity,
+	ClipboardList,
 	LayoutGrid,
 	Landmark,
 	Menu,
@@ -43,6 +44,7 @@ export default function Sidebar() {
     { icon: ShieldAlert, label: "Fraud Review", href: "/fraud-review" },
     { icon: Landmark, label: "Corporate CSR", href: "/corporate" },
     { icon: HandHeart, label: "Volunteer Hours", href: "/volunteer-hours" },
+    { icon: ClipboardList, label: "Volunteer Applications", href: "/volunteer-applications" },
     { icon: Flag, label: "Reports", href: "/reports" },
     { icon: Building2, label: "Communities & NGOs", href: "/communities-ngo" },
 

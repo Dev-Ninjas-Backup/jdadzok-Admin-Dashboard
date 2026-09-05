@@ -25,6 +25,28 @@ export const volunteerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Volunteer"],
     }),
+    getAllVolunteerProjects: builder.query({
+      query: () => ({
+        url: "/volunteer/allProjects",
+        method: "GET",
+      }),
+      providesTags: ["Volunteer"],
+    }),
+    getProjectApplications: builder.query({
+      query: (projectId: string) => ({
+        url: `/volunteer/project/${projectId}/applications`,
+        method: "GET",
+      }),
+      providesTags: ["Volunteer"],
+    }),
+    updateApplicationStatus: builder.mutation({
+      query: ({ applicationId, status, completionNote }) => ({
+        url: `/volunteer/status/${applicationId}`,
+        method: "PATCH",
+        body: { status, completionNote },
+      }),
+      invalidatesTags: ["Volunteer"],
+    }),
   }),
 });
 
@@ -32,4 +54,7 @@ export const {
   useGetPendingEndorsementQuery,
   useEndorseHoursMutation,
   useRejectHoursMutation,
+  useGetAllVolunteerProjectsQuery,
+  useGetProjectApplicationsQuery,
+  useUpdateApplicationStatusMutation,
 } = volunteerApi;
